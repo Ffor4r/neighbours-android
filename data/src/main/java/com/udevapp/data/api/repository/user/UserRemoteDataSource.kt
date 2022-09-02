@@ -1,41 +1,31 @@
-package com.example.data.repository.user
+package com.udevapp.data.api.repository.user
 
-import com.example.data.api.Api
-import com.example.data.api.user.UserService
-import com.example.data.mappers.UserResponseMapper
-import com.example.domain.model.Error
-import com.example.domain.model.User
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.udevapp.domain.model.User
+import com.udevapp.data.api.Api
+import com.udevapp.data.api.ApiError
+import com.udevapp.data.api.mappers.ApiErrorMapper
+import com.udevapp.data.api.mappers.UserMapper
+import com.udevapp.data.api.user.UserService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class UserRemoteDataSource(
     private val api: Api,
-    private val mapper: UserResponseMapper
+    private val mapper: UserMapper
 ) {
-
-    suspend fun postUser(postUserData: User): Any =
-        withContext(Dispatchers.IO) {
-            try {
-                val response = api.create(
+    suspend fun postUser(postUserData: User): Result<Any?> {
+        val response = withContext(Dispatchers.IO) {
+                api.create(
                     UserService::class.java,
                     null,
                     null
                 ).post(mapper.toUserRequest(postUserData))
-
-                if (response.isSuccessful) {
-                    return@withContext mapper.toUser(response.body()!!)
-                } else {
-                    val type = object : TypeToken<Error>() {}.type
-                    return@withContext Gson().fromJson<Error?>(
-                        response.errorBody()!!.charStream(),
-                        type
-                    )
-                }
-            } catch (e: Exception) {
-                return@withContext Error(e.message)
-            }
         }
 
+        return if (response.isSuccessful) {
+            Result.success(response.body()?.let { mapper.toUser(it) })
+        } else {
+            Result.failure(ApiError(message = response.message(), responseBody = response.errorBody()))
+        }
+    }
 }

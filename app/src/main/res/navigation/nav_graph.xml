@@ -17,15 +17,15 @@
 
     <fragment
         android:id="@+id/mainFlowFragment"
-        android:name="com.alish.navigationflowsample.presentation.ui.fragments.main.MainFlowFragment"
+        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.MainFlowFragment"
         android:label="flow_fragment_main"
-        tools:layout="@layout/flow_fragment_main" />
+        tools:layout="@layout/fragment_main_flow" />
 
     <fragment
         android:id="@+id/signFlowFragment"
-        android:name="com.alish.navigationflowsample.presentation.ui.fragments.sign.SignFlowFragment"
+        android:name="com.udevapp.neighbours.presentation.ui.fragments.sign.SignFlowFragment"
         android:label="flow_fragment_sign"
-        tools:layout="@layout/flow_fragment_sign" />
+        tools:layout="@layout/fragment_sign_flow" />
 
 
 </navigation>

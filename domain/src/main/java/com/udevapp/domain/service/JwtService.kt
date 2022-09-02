@@ -1,4 +1,4 @@
-package com.example.domain.utils
+package com.udevapp.domain.service
 
 import java.util.*
 

@@ -4,7 +4,7 @@ import com.udevapp.data.api.user.UserRequest
 import com.udevapp.data.api.user.UserResponse
 import com.udevapp.domain.model.User
 
-class UserResponseMapper {
+class UserMapper {
 
     fun toUser(userResponse: UserResponse): User {
         return User(
@@ -17,13 +17,12 @@ class UserResponseMapper {
         )
     }
 
-    fun toUserRequest(user: User): PostUserRequest {
-        return PostUserRequest(
+    fun toUserRequest(user: User): UserRequest {
+        return UserRequest(
             email = user.email,
             firstname = user.firstName,
             lastname = user.lastName,
             password = user.password!!
         )
     }
-
 }

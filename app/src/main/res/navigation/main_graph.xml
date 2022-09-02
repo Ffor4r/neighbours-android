@@ -7,21 +7,21 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.alish.navigationflowsample.presentation.ui.fragments.main.home.HomeFragment"
+        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/navigation_history"
-        android:name="com.alish.navigationflowsample.presentation.ui.fragments.main.history.HistoryFragment"
-        android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_history"-->
+<!--        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.history.HistoryFragment"-->
+<!--        android:label="fragment_history"-->
+<!--        tools:layout="@layout/fragment_history" />-->
 
-    <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.alish.navigationflowsample.presentation.ui.fragments.main.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_profile"-->
+<!--        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.profile.ProfileFragment"-->
+<!--        android:label="fragment_profile"-->
+<!--        tools:layout="@layout/fragment_profile" />-->
 
 
 </navigation>

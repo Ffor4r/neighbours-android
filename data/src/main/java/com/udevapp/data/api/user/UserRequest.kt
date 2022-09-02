@@ -1,4 +1,12 @@
 package com.udevapp.data.api.user
 
-class PostUserRequest {
-}
+data class UserRequest(
+
+    val email: String,
+
+    val firstname: String,
+
+    val lastname: String,
+
+    val password: String
+)

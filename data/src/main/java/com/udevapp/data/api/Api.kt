@@ -1,4 +1,4 @@
-package com.udevapp.data
+package com.udevapp.data.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -1,4 +1,4 @@
-package com.example.domain.model
+package com.udevapp.domain.model
 
 data class User(
     var id: String? = null,

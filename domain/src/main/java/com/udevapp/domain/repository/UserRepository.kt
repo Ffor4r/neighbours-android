@@ -1,9 +1,9 @@
-package com.example.domain.repository
+package com.udevapp.domain.repository
 
-import com.example.domain.model.User
+import com.udevapp.domain.model.User
 
 interface UserRepository {
     suspend fun createUser(
         postUserData: User
-    ): Any
+    ): Result<Any?>
 }
