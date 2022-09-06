@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface LoginService {
 
-    @GET
+    @GET("login")
     suspend fun login(): Response<LoginResponse>
 
 }

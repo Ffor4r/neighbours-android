@@ -3,13 +3,13 @@ package com.udevapp.domain.model
 data class User(
     var id: String? = null,
 
-    var firstName: String,
+    var firstName: String? = null,
 
-    var lastName: String,
+    var lastName: String? = null,
 
-    var email: String,
+    var email: String? = null,
 
     var createdAt: String? = null,
 
-    var password: String? = null
+    var password: String? = null,
 )

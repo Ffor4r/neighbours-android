@@ -8,7 +8,7 @@ class ApiError(
     val responseBody: ResponseBody?
 ) : Error() {
 
-    fun mapError() = ApiErrorMapper().toError(responseBody)
+    fun getMappedError() = ApiErrorMapper().toError(responseBody)
 
     data class Error(
         val detail: String?,

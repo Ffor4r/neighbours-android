@@ -11,6 +11,6 @@
     <string name="have_account">HAVE ACCOUNT</string>
     <string name="sign_up">Sign Up</string>
     <string name="first_name">First name</string>
-    <string name="second_name">Second name</string>
+    <string name="last_name">Last name</string>
     <string name="confirm_password">Confirm password</string>
 </resources>

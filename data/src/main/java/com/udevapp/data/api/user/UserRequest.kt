@@ -8,5 +8,5 @@ data class UserRequest(
 
     val lastname: String,
 
-    val password: String
+    val password: String,
 )
