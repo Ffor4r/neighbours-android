@@ -7,9 +7,9 @@ import okhttp3.ResponseBody
 
 class ApiErrorMapper {
 
-    fun toError(errorBody: ResponseBody?): ApiError.Error? {
-        val type = object : TypeToken<ApiError.Error>() {}.type
-        return Gson().fromJson<ApiError.Error?>(
+    fun toError(errorBody: ResponseBody?): ApiError.Exception? {
+        val type = object : TypeToken<ApiError.Exception>() {}.type
+        return Gson().fromJson<ApiError.Exception?>(
             errorBody!!.charStream(),
             type
         )

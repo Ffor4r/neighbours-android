@@ -5,12 +5,11 @@ import okhttp3.ResponseBody
 
 class ApiError(
     override val message: String?,
-    val responseBody: ResponseBody?
+    val responseBody: ResponseBody?,
+    val exception: Exception? = ApiErrorMapper().toError(responseBody)
 ) : Error() {
 
-    fun getMappedError() = ApiErrorMapper().toError(responseBody)
-
-    data class Error(
+    data class Exception(
         val detail: String?,
         val title: String?,
         val type: String?,

@@ -19,10 +19,10 @@ class UserMapper {
 
     fun toUserRequest(user: User): UserRequest {
         return UserRequest(
-            email = user.email!!,
-            firstname = user.firstName!!,
-            lastname = user.lastName!!,
-            password = user.password!!,
+            email = user.email,
+            firstname = user.firstName,
+            lastname = user.lastName,
+            password = user.password,
         )
     }
 }

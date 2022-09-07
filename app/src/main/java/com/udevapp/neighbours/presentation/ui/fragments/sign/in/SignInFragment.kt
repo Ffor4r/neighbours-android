@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.udevapp.neighbours.R
 import com.udevapp.neighbours.databinding.FragmentSignInBinding
+import com.udevapp.neighbours.presentation.extensions.activityNavController
+import com.udevapp.neighbours.presentation.extensions.navigateSafely
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +34,7 @@ class SignInFragment : Fragment() {
         _binding = FragmentSignInBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
 
         return view
@@ -39,13 +43,16 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (arguments?.get(R.id.action_signUpFragment_to_signInFragment.toString()) == true) {
+            Snackbar.make(requireView(), "Success registration, please login!", Snackbar.LENGTH_LONG).show()
+        }
+
         setupObservers()
         setupListeners()
     }
 
     private fun setupObservers() {
         loginSuccessObserve()
-        errorObserve()
     }
 
     private fun setupListeners() {
@@ -55,21 +62,13 @@ class SignInFragment : Fragment() {
 
     private fun loginSuccessObserve() {
         viewModel.loginState.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Success Login", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun errorObserve() {
-        viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Error Login", Toast.LENGTH_LONG).show()
+            activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
         }
     }
 
     private fun clickSignUp() {
-        binding.signUp.setOnClickListener{
-            viewModel.logout()
-            Toast.makeText(requireContext(), "Log Out", Toast.LENGTH_LONG).show()
-//            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
     }
 

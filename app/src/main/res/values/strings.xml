@@ -13,4 +13,9 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="confirm_password">Confirm password</string>
+
+<!--    Property Paths-->
+    <string name="p_email">email</string>
+    <string name="p_first_name">firstname</string>
+    <string name="p_last_name">lastname</string>
 </resources>

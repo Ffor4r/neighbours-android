@@ -1,6 +1,7 @@
 package com.udevapp.neighbours.di
 
 import com.udevapp.data.api.Api
+import com.udevapp.data.api.repository.login.LoginLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +15,8 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideApi(): Api {
-        return Api()
+    fun provideApi(loginLocalDataSource: LoginLocalDataSource): Api {
+        return Api(loginLocalDataSource = loginLocalDataSource)
     }
 
 }
