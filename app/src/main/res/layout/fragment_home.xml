@@ -23,20 +23,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
+<!--            <com.google.android.material.appbar.MaterialToolbar-->
+<!--                android:id="@+id/topAppBar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:elevation="0dp"-->
+<!--                app:menu="@menu/home_top_app_bar"-->
+<!--                app:title="@string/home" />-->
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/loading_bar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:elevation="0dp"
-                app:menu="@menu/home_top_app_bar"
-                app:title="@string/home" />
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:loading="@{viewmodel.loading}" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/place_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabMode="scrollable"
-                app:pager="@{placePager}"/>
+                app:pager="@{placePager}"
+                app:pages="@{viewmodel.places}"
+                app:tabGravity="center"
+                app:tabMode="scrollable">
+
+            </com.google.android.material.tabs.TabLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,6 +66,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:contentDescription="@string/home_fab_content_desc"
+            android:text="@string/home_fab_content_desc"
             app:srcCompat="@drawable/icon_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

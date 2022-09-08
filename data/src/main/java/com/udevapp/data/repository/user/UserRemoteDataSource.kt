@@ -1,30 +1,24 @@
 package com.udevapp.data.repository.user
 
-import com.udevapp.domain.model.User
 import com.udevapp.data.api.Api
 import com.udevapp.data.api.ApiError
-import com.udevapp.data.mappers.UserMapper
+import com.udevapp.data.api.user.UserRequest
 import com.udevapp.data.api.user.UserService
+import com.udevapp.data.repository.base.BaseRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UserRemoteDataSource(
-    private val api: Api,
-    private val mapper: UserMapper
-) {
-    suspend fun postUser(postUserData: User): Result<Any?> {
+class UserRemoteDataSource(private val api: Api) : BaseRemoteDataSource() {
+
+    suspend fun post(user: UserRequest): Result<Any?> {
         val response = withContext(Dispatchers.IO) {
-                api.create(
-                    UserService::class.java,
-                    null,
-                    null
-                ).post(mapper.toUserRequest(postUserData))
+            api.create(
+                UserService::class.java,
+                null,
+                null
+            ).post(user)
         }
 
-        return if (response.isSuccessful) {
-            Result.success(response.body()?.let { mapper.toUser(it) })
-        } else {
-            Result.failure(ApiError(message = response.message(), responseBody = response.errorBody()))
-        }
+        return handleResponse(response)
     }
 }

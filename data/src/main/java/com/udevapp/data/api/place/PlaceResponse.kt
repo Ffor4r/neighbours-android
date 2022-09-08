@@ -12,9 +12,18 @@ data class PlaceResponse(
     @SerializedName("user")
     var user: UserResponse,
 
+    @SerializedName("title")
+    var title: String,
+
     @SerializedName("address")
     var address: AddressResponse,
 
     @SerializedName("members")
     var members: List<UserResponse>
-)
+
+
+) {
+    override fun toString(): String {
+        return title
+    }
+}

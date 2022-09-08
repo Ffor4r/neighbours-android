@@ -13,7 +13,7 @@ class JwtService {
             "$header"
             "$payload"
         } catch (e: Exception) {
-            "Error parsing JWT: $e"
+            "Error parsing JWT"
         }
     }
 

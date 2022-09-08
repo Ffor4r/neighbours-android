@@ -14,7 +14,7 @@ class Api (private val loginLocalDataSource: LoginLocalDataSource) {
 
     fun <Api> create(
         api: Class<Api>,
-        authToken: String? = loginLocalDataSource.getToken(),
+        authToken: String? = loginLocalDataSource.getToken()?.token.toString(),
         authType: String? = "Bearer"
     ): Api {
         return Retrofit.Builder()

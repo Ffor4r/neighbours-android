@@ -34,7 +34,7 @@ class PlaceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.takeIf { it.containsKey("object") }?.apply {
-            binding.fragmentNumber.text = getInt("object").toString()
+            binding.fragmentNumber.text = getString("object").toString()
         }
 
     }

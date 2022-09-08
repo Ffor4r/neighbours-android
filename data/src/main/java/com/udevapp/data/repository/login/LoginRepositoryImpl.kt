@@ -1,5 +1,6 @@
 package com.udevapp.data.repository.login
 
+import com.udevapp.domain.model.UserToken
 import com.udevapp.domain.repository.LoginRepository
 
 class LoginRepositoryImpl(
@@ -10,7 +11,7 @@ class LoginRepositoryImpl(
 
     override fun saveToken(token: String) = loginLocalDataSource.saveToken(token)
 
-    override fun getToken(): String? = loginLocalDataSource.getToken()
+    override fun getToken(): UserToken? = loginLocalDataSource.getToken()
 
     override fun logout() = loginLocalDataSource.deleteToken()
 }

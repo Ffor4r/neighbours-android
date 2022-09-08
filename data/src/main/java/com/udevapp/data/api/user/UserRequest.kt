@@ -2,11 +2,11 @@ package com.udevapp.data.api.user
 
 data class UserRequest(
 
-    val email: String? = String(),
+    var email: String? = null,
 
-    val firstname: String? = String(),
+    var firstname: String? = null,
 
-    val lastname: String? = String(),
+    var lastname: String? = null,
 
-    val password: String? = String(),
+    var password: String? = null,
 )

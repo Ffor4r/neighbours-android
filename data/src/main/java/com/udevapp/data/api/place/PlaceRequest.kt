@@ -4,7 +4,9 @@ import com.udevapp.data.api.place.address.AddressRequest
 
 data class PlaceRequest(
 
-    val user: String? = String(),
+    var user: String? = String(),
 
-    val address: AddressRequest
+    var title: String? = String(),
+
+    var address: AddressRequest
 )

@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
-                    android:text="@={viewmodel.createUserFormData.firstName}"/>
+                    android:text="@={viewmodel.userFormData.firstname}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
-                    android:text="@={viewmodel.createUserFormData.lastName}"/>
+                    android:text="@={viewmodel.userFormData.lastname}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
-                    android:text="@={viewmodel.createUserFormData.email}"/>
+                    android:text="@={viewmodel.userFormData.email}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    android:text="@={viewmodel.createUserFormData.password}"/>
+                    android:text="@={viewmodel.userFormData.password}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

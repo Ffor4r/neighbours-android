@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.udevapp.neighbours.R
 import com.udevapp.neighbours.databinding.FragmentProfileBinding
+import com.udevapp.neighbours.presentation.extensions.activityNavController
+import com.udevapp.neighbours.presentation.extensions.navigateSafely
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +36,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.profileFloatingActionButton.setOnClickListener {
+            viewModel.logout()
+            activityNavController().navigateSafely(R.id.action_global_signFlowFragment)
+        }
 
     }
 

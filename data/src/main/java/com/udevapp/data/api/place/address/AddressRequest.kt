@@ -2,11 +2,11 @@ package com.udevapp.data.api.place.address
 
 data class AddressRequest(
 
-    val city: String? = String(),
+    var city: String? = String(),
 
-    val street: String? = String(),
+    var street: String? = String(),
 
-    val house: String? = String(),
+    var house: String? = String(),
 
-    val apt: String? = String(),
+    var apt: String? = String(),
 )

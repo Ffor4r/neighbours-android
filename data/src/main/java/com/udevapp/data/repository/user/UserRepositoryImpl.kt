@@ -1,9 +1,9 @@
 package com.udevapp.data.repository.user
 
-import com.udevapp.domain.model.User
+import com.udevapp.data.api.user.UserRequest
 import com.udevapp.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val userRemoteDataSource: UserRemoteDataSource) : UserRepository {
-    override suspend fun createUser(postUserData: User): Result<Any?> =
-        userRemoteDataSource.postUser(postUserData = postUserData)
+    override suspend fun create(user: Any?): Result<Any?> =
+        userRemoteDataSource.post(user = user as UserRequest)
 }

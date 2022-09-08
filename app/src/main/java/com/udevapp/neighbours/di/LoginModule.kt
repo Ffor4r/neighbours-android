@@ -2,6 +2,7 @@ package com.udevapp.neighbours.di
 
 
 import com.udevapp.domain.repository.LoginRepository
+import com.udevapp.domain.usecase.GetCurrentUserUseCase
 import com.udevapp.domain.usecase.LoginUserUseCase
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,12 @@ import dagger.hilt.android.components.ViewModelComponent
 class LoginModule {
 
     @Provides
-    fun provideLoginUserUseCase(loginRepository: LoginRepository): LoginUserUseCase{
+    fun provideLoginUserUseCase(loginRepository: LoginRepository): LoginUserUseCase {
         return LoginUserUseCase(loginRepository = loginRepository)
+    }
+
+    @Provides
+    fun provideGetCurrentUserUseCase(loginRepository: LoginRepository): GetCurrentUserUseCase {
+        return GetCurrentUserUseCase(loginRepository = loginRepository)
     }
 }
