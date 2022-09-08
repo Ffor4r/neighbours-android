@@ -1,4 +1,4 @@
-package com.udevapp.data.api.repository.login
+package com.udevapp.data.repository.login
 
 import com.udevapp.data.api.Api
 import com.udevapp.data.api.ApiError

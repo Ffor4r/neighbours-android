@@ -1,6 +1,6 @@
 package com.udevapp.data.api
 
-import com.udevapp.data.api.mappers.ApiErrorMapper
+import com.udevapp.data.mappers.ApiErrorMapper
 import okhttp3.ResponseBody
 
 class ApiError(

@@ -1,6 +1,6 @@
 package com.udevapp.data.api
 
-import com.udevapp.data.api.repository.login.LoginLocalDataSource
+import com.udevapp.data.repository.login.LoginLocalDataSource
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

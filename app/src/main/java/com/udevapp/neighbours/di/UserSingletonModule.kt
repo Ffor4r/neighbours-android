@@ -1,9 +1,9 @@
 package com.udevapp.neighbours.di
 
 import com.udevapp.data.api.Api
-import com.udevapp.data.api.mappers.UserMapper
-import com.udevapp.data.api.repository.user.UserRemoteDataSource
-import com.udevapp.data.api.repository.user.UserRepositoryImpl
+import com.udevapp.data.mappers.UserMapper
+import com.udevapp.data.repository.user.UserRemoteDataSource
+import com.udevapp.data.repository.user.UserRepositoryImpl
 import com.udevapp.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides

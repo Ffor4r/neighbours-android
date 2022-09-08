@@ -1,4 +1,4 @@
-package com.udevapp.data.api.mappers
+package com.udevapp.data.mappers
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

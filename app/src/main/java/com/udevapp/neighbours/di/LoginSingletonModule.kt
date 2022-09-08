@@ -2,9 +2,9 @@ package com.udevapp.neighbours.di
 
 import android.content.Context
 import com.udevapp.data.api.Api
-import com.udevapp.data.api.repository.login.LoginLocalDataSource
-import com.udevapp.data.api.repository.login.LoginRemoteDataSource
-import com.udevapp.data.api.repository.login.LoginRepositoryImpl
+import com.udevapp.data.repository.login.LoginLocalDataSource
+import com.udevapp.data.repository.login.LoginRemoteDataSource
+import com.udevapp.data.repository.login.LoginRepositoryImpl
 import com.udevapp.domain.repository.LoginRepository
 import dagger.Module
 import dagger.Provides

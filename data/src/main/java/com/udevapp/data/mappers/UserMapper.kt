@@ -1,4 +1,4 @@
-package com.udevapp.data.api.mappers
+package com.udevapp.data.mappers
 
 import com.udevapp.data.api.user.UserRequest
 import com.udevapp.data.api.user.UserResponse

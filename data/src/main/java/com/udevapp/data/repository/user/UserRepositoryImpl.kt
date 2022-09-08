@@ -1,4 +1,4 @@
-package com.udevapp.data.api.repository.user
+package com.udevapp.data.repository.user
 
 import com.udevapp.domain.model.User
 import com.udevapp.domain.repository.UserRepository
