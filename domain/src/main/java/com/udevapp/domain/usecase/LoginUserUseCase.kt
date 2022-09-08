@@ -16,6 +16,10 @@ class LoginUserUseCase(private val loginRepository: LoginRepository) {
         return Result.success(loginRepository.getToken())
     }
 
+    fun isLogin(): Boolean {
+        return loginRepository.getToken() != null
+    }
+
     fun logout() = loginRepository.logout()
 
 }
