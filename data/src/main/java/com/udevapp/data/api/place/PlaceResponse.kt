@@ -24,6 +24,6 @@ data class PlaceResponse(
 
 ) {
     override fun toString(): String {
-        return title
+        return "${address.street}, ${address.apt}"
     }
 }

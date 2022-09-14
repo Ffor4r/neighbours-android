@@ -14,7 +14,7 @@
     <string name="last_name">Last name</string>
     <string name="confirm_password">Confirm password</string>
 
-<!--    Property Paths-->
+    <!--    Property Paths-->
     <string name="p_email">email</string>
     <string name="p_first_name">firstname</string>
     <string name="p_last_name">lastname</string>
@@ -27,4 +27,8 @@
     <string name="edit">EDIT</string>
     <string name="home_fab_content_desc">Create new home</string>
     <string name="subtitle_description">Your address <b>❯</b></string>
+    <string name="home_bottom_sheet_title">Yours Address</string>
+    <string name="image_button_content_desc_sheet_item">Edit Address</string>
+    <string name="add_new_address">Add new address</string>
+    <string name="done">Done</string>
 </resources>

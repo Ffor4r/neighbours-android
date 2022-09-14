@@ -1,7 +1,9 @@
 package com.udevapp.neighbours.di
 
+import com.udevapp.domain.repository.DefaultPlaceRepository
 import com.udevapp.domain.repository.PlaceRepository
 import com.udevapp.domain.usecase.CreatePlaceUseCase
+import com.udevapp.domain.usecase.DefaultPlaceUseCase
 import com.udevapp.domain.usecase.GetPlaceUseCase
 import dagger.Module
 import dagger.Provides
@@ -20,6 +22,11 @@ class PlaceModule {
     @Provides
     fun provideCreatePlaceUseCase(placeRepository: PlaceRepository): CreatePlaceUseCase {
         return CreatePlaceUseCase(repository = placeRepository)
+    }
+
+    @Provides
+    fun provideDefaultPlaceUseCase(defaultPlaceRepository: DefaultPlaceRepository): DefaultPlaceUseCase {
+        return DefaultPlaceUseCase(repository = defaultPlaceRepository)
     }
 
 }

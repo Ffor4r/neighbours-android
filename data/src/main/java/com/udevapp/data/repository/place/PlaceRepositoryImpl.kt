@@ -3,7 +3,8 @@ package com.udevapp.data.repository.place
 import com.udevapp.data.api.place.PlaceRequest
 import com.udevapp.domain.repository.PlaceRepository
 
-class PlaceRepositoryImpl(private val placeRemoteDataSource: PlaceRemoteDataSource) :
+class PlaceRepositoryImpl(
+    private val placeRemoteDataSource: PlaceRemoteDataSource) :
     PlaceRepository {
 
     override suspend fun create(place: Any?): Result<Any?> =

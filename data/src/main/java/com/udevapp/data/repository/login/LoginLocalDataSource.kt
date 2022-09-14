@@ -7,10 +7,12 @@ import com.google.gson.reflect.TypeToken
 import com.udevapp.domain.model.UserToken
 import com.udevapp.domain.service.JwtService
 
-private const val LOGIN_SHARED_PREFERENCE = "neighbours_login_pref"
-private const val KEY_TOKEN_SHARED_PREFERENCE = "neighbours_login_token"
-
 class LoginLocalDataSource(context: Context) {
+
+    companion object {
+        private const val LOGIN_SHARED_PREFERENCE = "neighbours_login_pref"
+        private const val KEY_TOKEN_SHARED_PREFERENCE = "neighbours_login_token"
+    }
 
     private val sharedPreferences =
         context.getSharedPreferences(LOGIN_SHARED_PREFERENCE, Context.MODE_PRIVATE)

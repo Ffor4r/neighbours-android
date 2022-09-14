@@ -7,5 +7,4 @@ interface PlaceRepository {
     ): Result<Any?>
 
     suspend fun get(): Result<Any?>
-
 }

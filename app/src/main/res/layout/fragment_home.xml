@@ -7,7 +7,7 @@
 
         <variable
             name="pagerAdapter"
-            type="com.udevapp.neighbours.presentation.ui.adapters.PlaceCollectionAdapter" />
+            type="com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceViewPagerAdapter" />
 
         <variable
             name="viewmodel"
@@ -19,24 +19,20 @@
         android:layout_height="match_parent"
         tools:context=".presentation.ui.fragments.main.home.HomeFragment">
 
-<!--        <com.google.android.material.appbar.AppBarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <com.google.android.material.appbar.MaterialToolbar-->
-<!--                android:id="@+id/topAppBar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                android:elevation="0dp"-->
-<!--                app:menu="@menu/home_top_app_bar"-->
-<!--                app:title="@string/home" />-->
-
-<!--        </com.google.android.material.appbar.AppBarLayout>-->
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="0dp"
+                app:menu="@menu/home_top_app_bar"
+                app:place="@{viewmodel.currentPlace}"
+                app:subtitle="@string/subtitle_description"
+                app:subtitleCentered="true"
+                app:titleCentered="true" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/loading_bar"
@@ -45,36 +41,16 @@
                 android:indeterminate="true"
                 app:loading="@{viewmodel.loading}" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/place_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:pager="@{placePager}"
-                app:pages="@{viewmodel.places}"
-                app:tabGravity="center"
-                app:tabMode="scrollable">
+        </com.google.android.material.appbar.AppBarLayout>
 
-            </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/place_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:userInputEnabled="@{false}"
+            app:adapter="@{pagerAdapter}">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/place_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:adapter="@{pagerAdapter}">
-
-            </androidx.viewpager2.widget.ViewPager2>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/home_floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/home_fab_content_desc"
-            android:text="@string/home_fab_content_desc"
-            app:srcCompat="@drawable/icon_add" />
+        </androidx.viewpager2.widget.ViewPager2>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

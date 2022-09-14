@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.udevapp.data.api.place.PlaceResponse
 import com.udevapp.neighbours.R
 import com.udevapp.neighbours.databinding.FragmentPlaceBinding
 
@@ -33,9 +34,12 @@ class PlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.takeIf { it.containsKey("object") }?.apply {
-            binding.fragmentNumber.text = getString("object").toString()
-        }
+        arguments?.takeIf { it.containsKey("object") }
+            ?.apply {
+                val place = getString("object")
+
+                binding.fragmentNumber.text = place
+            }
 
     }
 

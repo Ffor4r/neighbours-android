@@ -1,14 +1,16 @@
 package com.udevapp.neighbours.presentation.ui.fragments.main.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.google.android.material.internal.ToolbarUtils
 import com.udevapp.neighbours.databinding.FragmentHomeBinding
-import com.udevapp.neighbours.presentation.ui.adapters.PlaceCollectionAdapter
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceViewPagerAdapter
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet.HomeBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,8 +25,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
 
-    private var testPlaces: MutableList<Int> = mutableListOf()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
-        binding.pagerAdapter = PlaceCollectionAdapter(this)
+        binding.pagerAdapter = PlaceViewPagerAdapter(this)
 
         return view
     }
@@ -42,13 +42,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupListeners()
         setupObservers()
         loadData()
     }
 
     private fun setupListeners() {
         clickAddPlace()
+        clickAddressTitle()
     }
 
     private fun loadData() {
@@ -57,30 +57,45 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         placesObserve()
+        currentPlaceObserve()
         errorObserve()
     }
 
-    private fun placesObserve(){
+    private fun placesObserve() {
         viewModel.places.observe(viewLifecycleOwner) {
             binding.pagerAdapter?.setPlaces(it)
             binding.pagerAdapter?.notifyDataSetChanged()
+            setupListeners()
+        }
+    }
+
+    private fun currentPlaceObserve() {
+        viewModel.currentPlace.observe(viewLifecycleOwner) {
+            binding.placePager.setCurrentItem(viewModel.getCurrentPlaceIndex(), false)
         }
     }
 
     private fun errorObserve() {
         viewModel.error.observe(viewLifecycleOwner) {
-            Log.i("AAA", it.exception?.detail.toString())
         }
     }
 
     private fun clickAddPlace() {
-        binding.homeFloatingActionButton.setOnClickListener {
-//            val elem = Random.nextInt(0, 100)
-//            testPlaces.add(elem)
-//            binding.pagerAdapter?.setPlaces(testPlaces)
-//            binding.pagerAdapter?.notifyItemInserted(testPlaces.indexOf(elem))
-            viewModel.createPlace()
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun clickAddressTitle() {
+        ToolbarUtils.getTitleTextView(binding.topAppBar)?.setOnClickListener {
+            clickToolbar()
         }
+        ToolbarUtils.getSubtitleTextView(binding.topAppBar)?.setOnClickListener {
+            clickToolbar()
+        }
+    }
+
+    private fun clickToolbar() {
+        val modalBottomSheet = HomeBottomSheetFragment(viewModel)
+        modalBottomSheet.show(parentFragmentManager, HomeBottomSheetFragment.TAG)
     }
 
     override fun onDestroyView() {

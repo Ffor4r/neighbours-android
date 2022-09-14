@@ -1,8 +1,12 @@
 package com.udevapp.neighbours.di
 
 import com.udevapp.data.api.Api
+import com.udevapp.data.db.Database
+import com.udevapp.data.repository.place.DefaultPlaceLocalDataSource
+import com.udevapp.data.repository.place.DefaultPlaceRepositoryImpl
 import com.udevapp.data.repository.place.PlaceRemoteDataSource
 import com.udevapp.data.repository.place.PlaceRepositoryImpl
+import com.udevapp.domain.repository.DefaultPlaceRepository
 import com.udevapp.domain.repository.PlaceRepository
 import dagger.Module
 import dagger.Provides
@@ -16,8 +20,24 @@ class PlaceSingletonModule {
 
     @Provides
     @Singleton
-    fun providePlaceRepository(remoteDataSource: PlaceRemoteDataSource): PlaceRepository {
-        return PlaceRepositoryImpl(placeRemoteDataSource = remoteDataSource)
+    fun provideDefaultPlaceLocalDataSource(database: Database): DefaultPlaceLocalDataSource {
+        return DefaultPlaceLocalDataSource(database = database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDefaultPlaceRepository(defaultPlaceLocalDataSource: DefaultPlaceLocalDataSource): DefaultPlaceRepository {
+        return DefaultPlaceRepositoryImpl(defaultPlaceLocalDataSource = defaultPlaceLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun providePlaceRepository(
+        remoteDataSource: PlaceRemoteDataSource,
+    ): PlaceRepository {
+        return PlaceRepositoryImpl(
+            placeRemoteDataSource = remoteDataSource,
+        )
     }
 
     @Provides

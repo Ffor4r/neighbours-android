@@ -1,12 +1,11 @@
-package com.udevapp.neighbours.presentation.ui.adapters
+package com.udevapp.neighbours.presentation.ui.fragments.main.home.place
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.udevapp.data.api.place.PlaceResponse
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceFragment
 
-class PlaceCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class PlaceViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private var places: List<PlaceResponse> = listOf()
 
@@ -15,7 +14,7 @@ class PlaceCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
     override fun createFragment(position: Int): Fragment {
         val fragment = PlaceFragment()
         fragment.arguments = Bundle().apply {
-            putString("object", places[position].address.apt)
+            putString("object", places[position].id)
         }
         return fragment
     }
