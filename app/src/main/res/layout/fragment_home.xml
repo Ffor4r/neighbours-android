@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="pagerAdapter"
-            type="com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceViewPagerAdapter" />
-
-        <variable
             name="viewmodel"
             type="com.udevapp.neighbours.presentation.ui.fragments.main.home.HomeViewModel" />
     </data>
@@ -29,7 +25,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:menu="@menu/home_top_app_bar"
-                app:place="@{viewmodel.currentPlace}"
+                app:place="@{viewmodel.defaultPlace}"
                 app:subtitle="@string/subtitle_description"
                 app:subtitleCentered="true"
                 app:titleCentered="true" />
@@ -43,14 +39,12 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/place_pager"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/place_page"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:userInputEnabled="@{false}"
-            app:adapter="@{pagerAdapter}">
+            android:layout_height="match_parent">
 
-        </androidx.viewpager2.widget.ViewPager2>
+        </androidx.fragment.app.FragmentContainerView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

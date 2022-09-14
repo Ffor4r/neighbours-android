@@ -1,6 +1,6 @@
 package com.udevapp.data.repository.base
 
-import com.udevapp.data.api.ApiError
+import com.udevapp.data.api.Violation
 import retrofit2.Response
 
 abstract class BaseRemoteDataSource {
@@ -9,7 +9,7 @@ abstract class BaseRemoteDataSource {
         return if (response.isSuccessful) {
             Result.success(response.body())
         } else {
-            Result.failure(ApiError(message = response.message(), responseBody = response.errorBody()))
+            Result.failure(Violation(message = response.message(), responseBody = response.errorBody()))
         }
     }
 

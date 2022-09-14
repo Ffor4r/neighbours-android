@@ -21,7 +21,7 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
     private var adapter: AddressRecyclerViewAdapter =
         AddressRecyclerViewAdapter(
             homeViewModel.places,
-            homeViewModel.getCurrentPlaceIndex()
+            homeViewModel.defaultPlaceIndex.value ?: 0
         )
 
     override fun onCreateView(
@@ -49,8 +49,8 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
 
     private fun clickButtonDone() {
         binding.actionChangeSelectedAddress.setOnClickListener {
-            homeViewModel.changeCurrentPlace(adapter.getSelectedPosition())
-            dismissAllowingStateLoss()
+            homeViewModel.updateDefaultPlace(adapter.getSelectedPosition(), true)
+            dismiss()
         }
     }
 

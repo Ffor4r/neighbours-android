@@ -4,8 +4,8 @@ import com.udevapp.domain.repository.DefaultPlaceRepository
 
 class DefaultPlaceUseCase(private val repository: DefaultPlaceRepository) {
 
-    fun getDefaultIndex(userId: String): Int = repository.getDefaultPlaceIndex(userId)
+    suspend fun getDefaultPlace(userId: String): Result<Any?> = repository.getDefaultPlace(userId)
 
-    fun setDefaultIndex(userId: String, index: Int) = repository.setDefaultPlaceIndex(userId, index)
+    suspend fun setDefaultPlace(userId: String, index: Int) = repository.setDefaultPlace(userId, index)
 
 }

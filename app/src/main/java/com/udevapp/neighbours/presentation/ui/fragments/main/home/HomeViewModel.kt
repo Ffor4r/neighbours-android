@@ -4,15 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.udevapp.data.api.place.PlaceResponse
+import com.udevapp.data.db.entity.DefaultPlace
 import com.udevapp.domain.usecase.CreatePlaceUseCase
 import com.udevapp.domain.usecase.DefaultPlaceUseCase
 import com.udevapp.domain.usecase.GetCurrentUserUseCase
 import com.udevapp.domain.usecase.GetPlaceUseCase
 import com.udevapp.neighbours.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,22 +25,11 @@ class HomeViewModel @Inject constructor(
     private val _places = MutableLiveData<List<PlaceResponse>>()
     val places: LiveData<List<PlaceResponse>> = _places
 
-    private val _currentPlace = MutableLiveData<PlaceResponse>()
-    val currentPlace: LiveData<PlaceResponse> = _currentPlace
+    private val _defaultPlace = MutableLiveData<PlaceResponse>()
+    val defaultPlace: LiveData<PlaceResponse> = _defaultPlace
 
-    fun changeCurrentPlace(position: Int) {
-        _currentPlace.value = places.value?.get(position)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                defaultPlaceUseCase.setDefaultIndex(getCurrentUserUseCase.getUserToken()!!.id, position)
-            }
-        }
-    }
-
-    fun getCurrentPlaceIndex(): Int {
-        defaultPlaceUseCase.getDefaultIndex(getCurrentUserUseCase.getUserToken()!!.id)
-        TODO("make context call")
-    }
+    private val _defaultPlaceIndex = MutableLiveData<Int>()
+    val defaultPlaceIndex: LiveData<Int> = _defaultPlaceIndex
 
     fun createPlace() {
         viewModelScope.launch {
@@ -52,7 +40,7 @@ class HomeViewModel @Inject constructor(
 //            )) {
 //                Log.i("AAA", it.toString())
 //            }
-
+//
 //            onSuccess(
 //                loginUserUseCase.login(
 //                    Base64.getEncoder()
@@ -65,14 +53,36 @@ class HomeViewModel @Inject constructor(
 
     fun loadPlaces() {
         viewModelScope.launch {
-
             switchLoadingStatus()
-
             onSuccess(getPlaceUseCase.get()) {
-                _places.value = it as List<PlaceResponse>
-                _currentPlace.value = places.value?.get(getCurrentPlaceIndex())
+                viewModelScope.launch {
+                    _places.value = it as List<PlaceResponse>?
+                    val result =
+                        defaultPlaceUseCase.getDefaultPlace(getCurrentUserUseCase.getUserToken()!!.id)
+                    updateDefaultPlace((result.getOrNull() as DefaultPlace?)?.defaultIndex ?: 0)
+                }
             }
+        }
+    }
 
+    fun updateDefaultPlace(position: Int, force: Boolean) {
+        updateDefaultPlace(position)
+        if (force) {
+            switchLoadingStatus()
+            viewModelScope.launch {
+                defaultPlaceUseCase.setDefaultPlace(
+                    getCurrentUserUseCase.getUserToken()!!.id,
+                    position
+                )
+                switchLoadingStatus()
+            }
+        }
+    }
+
+    private fun updateDefaultPlace(position: Int) {
+        if (defaultPlaceIndex.value != position) {
+            _defaultPlace.value = places.value?.get(position)
+            _defaultPlaceIndex.value = position
         }
     }
 }

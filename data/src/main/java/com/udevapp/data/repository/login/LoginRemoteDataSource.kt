@@ -1,7 +1,7 @@
 package com.udevapp.data.repository.login
 
 import com.udevapp.data.api.Api
-import com.udevapp.data.api.ApiError
+import com.udevapp.data.api.Violation
 import com.udevapp.data.api.login.LoginService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,7 +20,7 @@ class LoginRemoteDataSource(private val api: Api) {
         return if (response.isSuccessful) {
             Result.success(response.body()?.token)
         } else {
-            Result.failure(ApiError(message = response.message(), responseBody = response.errorBody()))
+            Result.failure(Violation(message = response.message(), responseBody = response.errorBody()))
         }
     }
 

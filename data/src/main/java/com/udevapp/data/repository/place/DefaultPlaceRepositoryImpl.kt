@@ -6,9 +6,9 @@ class DefaultPlaceRepositoryImpl(
     private val defaultPlaceLocalDataSource: DefaultPlaceLocalDataSource
 
 ) : DefaultPlaceRepository {
-    override fun getDefaultPlaceIndex(userId: String): Int =
-        defaultPlaceLocalDataSource.getDefaultPlaceIndex(userId).defaultIndex ?: 0
+    override suspend fun getDefaultPlace(userId: String): Result<Any?> =
+        defaultPlaceLocalDataSource.getDefaultPlaceIndex(userId)
 
-    override fun setDefaultPlaceIndex(userId: String, index: Int) =
+    override suspend fun setDefaultPlace(userId: String, index: Int) =
         defaultPlaceLocalDataSource.setDefaultPlaceIndex(userId, index)
 }

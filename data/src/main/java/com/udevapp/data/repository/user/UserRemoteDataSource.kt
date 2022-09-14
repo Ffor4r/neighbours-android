@@ -1,7 +1,6 @@
 package com.udevapp.data.repository.user
 
 import com.udevapp.data.api.Api
-import com.udevapp.data.api.ApiError
 import com.udevapp.data.api.user.UserRequest
 import com.udevapp.data.api.user.UserService
 import com.udevapp.data.repository.base.BaseRemoteDataSource

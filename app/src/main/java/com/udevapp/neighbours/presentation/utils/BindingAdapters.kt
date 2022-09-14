@@ -1,13 +1,12 @@
 package com.udevapp.neighbours.presentation.utils
 
-import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.TextInputLayout
-import com.udevapp.data.api.ApiError
+import com.udevapp.data.api.Violation
 
 @BindingAdapter("app:loading")
 fun loading(linearProgressIndicator: LinearProgressIndicator, loading: LiveData<Boolean>) {
@@ -16,7 +15,7 @@ fun loading(linearProgressIndicator: LinearProgressIndicator, loading: LiveData<
 }
 
 @BindingAdapter(value = ["app:error", "app:propertyPath"], requireAll = false)
-fun error(textInputLayout: TextInputLayout, error: LiveData<ApiError>, propertyPath: String = ""){
+fun error(textInputLayout: TextInputLayout, error: LiveData<Violation>, propertyPath: String = ""){
     val mappedError = error.value?.exception
     if (mappedError?.violations?.isNotEmpty() == true) {
         mappedError.violations!!.forEach {

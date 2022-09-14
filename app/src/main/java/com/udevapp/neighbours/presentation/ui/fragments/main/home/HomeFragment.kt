@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.material.internal.ToolbarUtils
 import com.udevapp.neighbours.databinding.FragmentHomeBinding
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceViewPagerAdapter
 import com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet.HomeBottomSheetFragment
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
-        binding.pagerAdapter = PlaceViewPagerAdapter(this)
 
         return view
     }
@@ -44,6 +43,7 @@ class HomeFragment : Fragment() {
 
         setupObservers()
         loadData()
+        setupListeners()
     }
 
     private fun setupListeners() {
@@ -57,21 +57,20 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         placesObserve()
-        currentPlaceObserve()
         errorObserve()
     }
 
     private fun placesObserve() {
-        viewModel.places.observe(viewLifecycleOwner) {
-            binding.pagerAdapter?.setPlaces(it)
-            binding.pagerAdapter?.notifyDataSetChanged()
-            setupListeners()
-        }
-    }
-
-    private fun currentPlaceObserve() {
-        viewModel.currentPlace.observe(viewLifecycleOwner) {
-            binding.placePager.setCurrentItem(viewModel.getCurrentPlaceIndex(), false)
+        viewModel.defaultPlaceIndex.observe(viewLifecycleOwner) {
+            childFragmentManager.beginTransaction().apply {
+                val fragment = PlaceFragment()
+                fragment.arguments = Bundle().apply {
+                    putString(PlaceFragment.TAG, viewModel.places.value?.get(it)?.id)
+                }
+                replace(binding.placePage.id, fragment)
+                addToBackStack(null)
+                commit()
+            }
         }
     }
 

@@ -15,6 +15,7 @@ class PlaceFragment : Fragment() {
 
     companion object {
         fun newInstance() = PlaceFragment()
+        const val TAG = "PlaceFragment"
     }
 
     private var _binding: FragmentPlaceBinding? = null
@@ -34,9 +35,9 @@ class PlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.takeIf { it.containsKey("object") }
+        arguments?.takeIf { it.containsKey(TAG) }
             ?.apply {
-                val place = getString("object")
+                val place = getString(TAG)
 
                 binding.fragmentNumber.text = place
             }

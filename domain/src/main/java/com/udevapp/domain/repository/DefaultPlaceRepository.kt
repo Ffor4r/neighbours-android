@@ -2,8 +2,8 @@ package com.udevapp.domain.repository
 
 interface DefaultPlaceRepository {
 
-    fun getDefaultPlaceIndex(userId: String): Int
+    suspend fun getDefaultPlace(userId: String): Result<Any?>
 
-    fun setDefaultPlaceIndex(userId: String, index: Int)
+    suspend fun setDefaultPlace(userId: String, index: Int)
 
 }

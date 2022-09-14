@@ -3,7 +3,7 @@ package com.udevapp.data.api
 import com.udevapp.data.mappers.ApiErrorMapper
 import okhttp3.ResponseBody
 
-class ApiError(
+class Violation(
     override val message: String?,
     val responseBody: ResponseBody?,
     val exception: Exception? = ApiErrorMapper().toError(responseBody)
