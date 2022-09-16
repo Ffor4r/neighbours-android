@@ -99,8 +99,8 @@ open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : Dialog
             homeViewModel.createPlace(
                 AddressRequest(
                     city = viewModel.locationText.value?.split(",")?.first(),
-                    street = split?.first(),
-                    house = split?.last()
+                    street = split?.first()?.trim(),
+                    house = split?.last()?.trim()
                 )
             )
             dismiss()

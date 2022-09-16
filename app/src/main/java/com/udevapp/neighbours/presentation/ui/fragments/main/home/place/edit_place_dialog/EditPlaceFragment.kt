@@ -21,8 +21,8 @@ class EditPlaceFragment(
                 id,
                 AddressRequest(
                     city = viewModel.locationText.value?.split(",")?.first(),
-                    street = split?.first(),
-                    house = split?.last()
+                    street = split?.first()?.trim(),
+                    house = split?.last()?.trim()
                 )
             )
             dismiss()

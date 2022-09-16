@@ -66,23 +66,18 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
 
     private fun clickButtonAdd() {
         binding.addNewAddress.setOnClickListener {
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) -> {
-                    showAddPlaceDialog()
-                }
-                else -> {
-                    requestPermissionLauncher.launch(
-                        arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        )
-                    )
-                }
+            checkPermission {
+                showAddPlaceDialog()
             }
         }
+    }
+
+    private fun showEditPlaceDialog(position: Int, placeResponse: PlaceResponse?) {
+        EditPlaceFragment(homeViewModel, placeResponse, position).show(
+            parentFragmentManager,
+            AddPlaceFragment.TAG
+        )
+        this.dismiss()
     }
 
     private fun showAddPlaceDialog() {
@@ -92,8 +87,9 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
 
     inner class OnEditClickListener : AddressRecyclerViewAdapter.OnItemClickListener {
         override fun onItemClick(position: Int, placeResponse: PlaceResponse?) {
-            EditPlaceFragment(homeViewModel, placeResponse, position).show(parentFragmentManager, AddPlaceFragment.TAG)
-            dismiss()
+            checkPermission {
+                showEditPlaceDialog(position, placeResponse)
+            }
         }
     }
 
@@ -107,6 +103,25 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun <R> checkPermission(onSuccess: () -> R) {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) -> {
+                onSuccess()
+            }
+            else -> {
+                requestPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+        }
     }
 
     private fun registerForActivityResult(): ActivityResultLauncher<Array<String>> {
