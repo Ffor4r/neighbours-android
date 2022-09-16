@@ -25,4 +25,12 @@ class PlaceRemoteDataSource(private val api: Api) : BaseRemoteDataSource() {
         return handleResponse(response)
     }
 
+    suspend fun put(id: String, placeRequest: PlaceRequest): Result<Any?> {
+        val response = withContext(Dispatchers.IO) {
+            api.create(PlaceService::class.java).put(id, placeRequest)
+        }
+
+        return handleResponse(response)
+    }
+
 }

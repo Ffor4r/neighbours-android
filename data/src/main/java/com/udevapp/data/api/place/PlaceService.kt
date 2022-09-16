@@ -1,9 +1,7 @@
 package com.udevapp.data.api.place
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface PlaceService {
 
@@ -13,4 +11,6 @@ interface PlaceService {
     @GET("places")
     suspend fun get(): Response<List<PlaceResponse>>
 
+    @PUT("places/{id}")
+    suspend fun put( @Path("id") id: String, @Body placeRequest: PlaceRequest): Response<PlaceResponse>
 }

@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.udevapp.data.api.place.address.AddressRequest
 import com.udevapp.neighbours.R
 import com.udevapp.neighbours.databinding.FragmentAddPlaceBinding
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.HomeViewModel
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
@@ -20,17 +22,16 @@ import com.yandex.mapkit.map.Map
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddPlaceFragment : DialogFragment() {
+open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : DialogFragment() {
 
     companion object {
-        fun newInstance() = AddPlaceFragment()
         const val TAG = "AddPlaceFragment"
     }
 
     private var _binding: FragmentAddPlaceBinding? = null
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
-    private val viewModel by viewModels<AddPlaceViewModel>()
+    protected val viewModel by viewModels<AddPlaceViewModel>()
 
     private val addressCameraListener = AddressCameraListener()
 
@@ -74,6 +75,7 @@ class AddPlaceFragment : DialogFragment() {
         setupMapCameraListener()
         clickFindPosition()
         clickFabNavigation()
+        clickDone()
     }
 
     private fun setupLocationObservers() {
@@ -88,6 +90,20 @@ class AddPlaceFragment : DialogFragment() {
         }
         viewModel.addressText.observe(viewLifecycleOwner) {
             binding.addressText.text = it ?: resources.getString(R.string.searching)
+        }
+    }
+
+    protected open fun clickDone() {
+        binding.done.setOnClickListener {
+            val split = viewModel.addressText.value?.split(",")
+            homeViewModel.createPlace(
+                AddressRequest(
+                    city = viewModel.locationText.value?.split(",")?.first(),
+                    street = split?.first(),
+                    house = split?.last()
+                )
+            )
+            dismiss()
         }
     }
 

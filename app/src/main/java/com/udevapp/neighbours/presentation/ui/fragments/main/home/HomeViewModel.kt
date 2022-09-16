@@ -1,14 +1,14 @@
 package com.udevapp.neighbours.presentation.ui.fragments.main.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.udevapp.data.api.place.PlaceRequest
 import com.udevapp.data.api.place.PlaceResponse
+import com.udevapp.data.api.place.address.AddressRequest
 import com.udevapp.data.db.entity.DefaultPlace
-import com.udevapp.domain.usecase.CreatePlaceUseCase
-import com.udevapp.domain.usecase.DefaultPlaceUseCase
-import com.udevapp.domain.usecase.GetCurrentUserUseCase
-import com.udevapp.domain.usecase.GetPlaceUseCase
+import com.udevapp.domain.usecase.*
 import com.udevapp.neighbours.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,7 +19,8 @@ class HomeViewModel @Inject constructor(
     private val getPlaceUseCase: GetPlaceUseCase,
     private val defaultPlaceUseCase: DefaultPlaceUseCase,
     private val createPlaceUseCase: CreatePlaceUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val editAddressUseCase: EditAddressUseCase
 ) : BaseViewModel() {
 
     private val _places = MutableLiveData<List<PlaceResponse>>()
@@ -31,23 +32,35 @@ class HomeViewModel @Inject constructor(
     private val _defaultPlaceIndex = MutableLiveData<Int>()
     val defaultPlaceIndex: LiveData<Int> = _defaultPlaceIndex
 
-    fun createPlace() {
+    fun createPlace(addressRequest: AddressRequest, title: String = String()) {
         viewModelScope.launch {
             switchLoadingStatus()
 
-//            onSuccess(createPlaceUseCase.create(
-//                PlaceRequest()
-//            )) {
-//                Log.i("AAA", it.toString())
-//            }
-//
-//            onSuccess(
-//                loginUserUseCase.login(
-//                    Base64.getEncoder()
-//                        .encodeToString("$email:$password".toByteArray())
-//                )
-//            ) { _loginState.value = it.toString() }
+            onSuccess(createPlaceUseCase.create(
+                PlaceRequest(
+                    user = getCurrentUserUseCase.getUserToken()?.id,
+                    title = title,
+                    address = addressRequest
+                )
+            )) {
+                loadPlaces()
+            }
+        }
+    }
 
+    fun editPlace(id: String, addressRequest: AddressRequest, title: String = String()) {
+        viewModelScope.launch {
+            switchLoadingStatus()
+
+            onSuccess(editAddressUseCase.edit(
+                id,
+                PlaceRequest(
+                    title = title,
+                    address = addressRequest
+                )
+            )) {
+                loadPlaces()
+            }
         }
     }
 

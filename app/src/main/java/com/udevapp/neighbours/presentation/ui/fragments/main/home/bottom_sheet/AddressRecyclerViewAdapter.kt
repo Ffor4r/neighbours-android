@@ -1,6 +1,7 @@
 package com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RadioButton
@@ -13,9 +14,15 @@ import com.udevapp.neighbours.databinding.FragmentHomeBottomSheetItemBinding
 class AddressRecyclerViewAdapter(
     private val places: LiveData<List<PlaceResponse>>,
     private var selectedPosition: Int = 0,
-    private var lastSelectedPosition: Int = selectedPosition
+    private var lastSelectedPosition: Int = selectedPosition,
 ) :
     RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
+
+    private lateinit var editClickListener: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, placeResponse: PlaceResponse?)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -44,6 +51,9 @@ class AddressRecyclerViewAdapter(
                 notifyItemChanged(selectedPosition)
             }
         }
+        holder.editButton.setOnClickListener{
+            editClickListener.onItemClick(position, item)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -55,6 +65,8 @@ class AddressRecyclerViewAdapter(
     }
 
     fun getSelectedPosition(): Int = selectedPosition
+
+    fun setEditOnClickListener(listener: OnItemClickListener) {editClickListener = listener}
 
     inner class ViewHolder(binding: FragmentHomeBottomSheetItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

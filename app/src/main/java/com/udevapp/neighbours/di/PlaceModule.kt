@@ -4,6 +4,7 @@ import com.udevapp.domain.repository.DefaultPlaceRepository
 import com.udevapp.domain.repository.PlaceRepository
 import com.udevapp.domain.usecase.CreatePlaceUseCase
 import com.udevapp.domain.usecase.DefaultPlaceUseCase
+import com.udevapp.domain.usecase.EditAddressUseCase
 import com.udevapp.domain.usecase.GetPlaceUseCase
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,7 @@ import dagger.hilt.android.components.ViewModelComponent
 class PlaceModule {
 
     @Provides
-    fun provideGetPlaceUseCase(placeRepository: PlaceRepository) : GetPlaceUseCase {
+    fun provideGetPlaceUseCase(placeRepository: PlaceRepository): GetPlaceUseCase {
         return GetPlaceUseCase(repository = placeRepository)
     }
 
@@ -27,6 +28,11 @@ class PlaceModule {
     @Provides
     fun provideDefaultPlaceUseCase(defaultPlaceRepository: DefaultPlaceRepository): DefaultPlaceUseCase {
         return DefaultPlaceUseCase(repository = defaultPlaceRepository)
+    }
+
+    @Provides
+    fun provideEditAddressUseCase(placeRepository: PlaceRepository): EditAddressUseCase {
+        return EditAddressUseCase(repository = placeRepository)
     }
 
 }

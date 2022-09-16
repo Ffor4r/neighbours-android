@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        clickAddPlace()
         clickAddressTitle()
     }
 
@@ -76,9 +75,6 @@ class HomeFragment : Fragment() {
     private fun errorObserve() {
         viewModel.error.observe(viewLifecycleOwner) {
         }
-    }
-
-    private fun clickAddPlace() {
     }
 
     @SuppressLint("RestrictedApi")
