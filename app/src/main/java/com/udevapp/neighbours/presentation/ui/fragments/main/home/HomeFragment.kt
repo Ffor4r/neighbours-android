@@ -68,7 +68,6 @@ class HomeFragment : Fragment() {
                     putString(PlaceFragment.TAG, viewModel.places.value?.get(it)?.id)
                 }
                 replace(binding.placePage.id, fragment)
-                addToBackStack(null)
                 commit()
             }
         }

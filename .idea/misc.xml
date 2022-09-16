@@ -3,13 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_add.xml" value="0.1765" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_arrow.xml" value="0.164" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_close.xml" value="0.164" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_home.xml" value="0.2265" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_near_me.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_profile.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_qr_code_scanner.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_settings.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_tune.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/activity_main.xml" value="0.18432971014492755" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_add_place.xml" value="0.20081595648232095" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_blank.xml" value="0.1936725096194955" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_home.xml" value="0.16" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_home_bottom_sheet.xml" value="0.2" />

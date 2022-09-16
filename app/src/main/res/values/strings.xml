@@ -31,4 +31,7 @@
     <string name="image_button_content_desc_sheet_item">Edit Address</string>
     <string name="add_new_address">Add new address</string>
     <string name="done">Done</string>
+    <string name="navigation_back">navigation back</string>
+    <string name="user_position">User position</string>
+    <string name="searching">Searching…</string>
 </resources>
