@@ -64,7 +64,5 @@ class CalendarAdapter(
 
     }
 
-    override fun getItemCount(): Int {
-        return days.size
-    }
+    override fun getItemCount(): Int = days.size
 }

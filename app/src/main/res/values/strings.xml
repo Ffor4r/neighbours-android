@@ -18,6 +18,7 @@
     <string name="p_email">email</string>
     <string name="p_first_name">firstname</string>
     <string name="p_last_name">lastname</string>
+
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="top_bar_title">Neighbours</string>
@@ -34,4 +35,7 @@
     <string name="navigation_back">navigation back</string>
     <string name="user_position">User position</string>
     <string name="searching">Searching…</string>
+    <string name="templates">Templates</string>
+    <string name="templates_fab_content_desc">Add new template</string>
+    <string name="for_all_template">For all</string>
 </resources>

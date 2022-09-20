@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.settings.SettingsFragment"
+        android:id="@+id/navigation_templates"
+        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.templates.TemplatesFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_templates" />
 
 
 </navigation>

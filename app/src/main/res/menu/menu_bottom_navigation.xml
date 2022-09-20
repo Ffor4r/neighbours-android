@@ -7,9 +7,9 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/icon_settings"
-        android:title="@string/settings" />
+        android:id="@+id/navigation_templates"
+        android:icon="@drawable/icon_edit_calendar"
+        android:title="@string/templates" />
 
     <item
         android:id="@+id/navigation_profile"

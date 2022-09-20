@@ -13,4 +13,11 @@ data class CalendarDateModel(var date: Date, var isSelected: Boolean = false) {
             cal.time = date
             return cal[Calendar.DAY_OF_MONTH].toString()
         }
+
+    val weekDate: String
+        get() {
+            val cal = Calendar.getInstance()
+            cal.time = date
+            return cal[Calendar.DAY_OF_WEEK].toString()
+        }
 }

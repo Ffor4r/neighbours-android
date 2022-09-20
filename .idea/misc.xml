@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/calendar_current_bg.xml" value="0.1575" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/calendar_day_highlight_bg.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/calendar_highlight_bg.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_add.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_arrow.xml" value="0.164" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_close.xml" value="0.164" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_edit_calendar.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_home.xml" value="0.2265" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_near_me.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_profile.xml" value="0.1765" />
@@ -30,6 +32,9 @@
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_sign_flow.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_sign_in.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_sign_up.xml" value="0.18432971014492755" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_template_item.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_template_item_day_item.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_templates.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/home_bottom_sheet_item.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/menu/home_top_app_bar.xml" value="0.24895833333333334" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.25" />
