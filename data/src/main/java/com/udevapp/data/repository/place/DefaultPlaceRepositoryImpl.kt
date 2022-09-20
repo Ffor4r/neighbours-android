@@ -9,6 +9,6 @@ class DefaultPlaceRepositoryImpl(
     override suspend fun getDefaultPlace(userId: String): Result<Any?> =
         defaultPlaceLocalDataSource.getDefaultPlaceIndex(userId)
 
-    override suspend fun setDefaultPlace(userId: String, index: Int) =
-        defaultPlaceLocalDataSource.setDefaultPlaceIndex(userId, index)
+    override suspend fun setDefaultPlace(userId: String, index: Int, placeId: String) =
+        defaultPlaceLocalDataSource.setDefaultPlaceIndex(userId, index, placeId)
 }

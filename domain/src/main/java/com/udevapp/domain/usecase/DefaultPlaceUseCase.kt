@@ -6,6 +6,6 @@ class DefaultPlaceUseCase(private val repository: DefaultPlaceRepository) {
 
     suspend fun getDefaultPlace(userId: String): Result<Any?> = repository.getDefaultPlace(userId)
 
-    suspend fun setDefaultPlace(userId: String, index: Int) = repository.setDefaultPlace(userId, index)
+    suspend fun setDefaultPlace(userId: String, index: Int, placeId: String) = repository.setDefaultPlace(userId, index, placeId)
 
 }

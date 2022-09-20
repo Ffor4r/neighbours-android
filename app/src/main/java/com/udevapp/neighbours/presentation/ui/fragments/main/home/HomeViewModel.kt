@@ -85,7 +85,8 @@ class HomeViewModel @Inject constructor(
             viewModelScope.launch {
                 defaultPlaceUseCase.setDefaultPlace(
                     getCurrentUserUseCase.getUserToken()!!.id,
-                    position
+                    position,
+                    defaultPlace.value!!.id
                 )
                 switchLoadingStatus()
             }
@@ -93,7 +94,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun updateDefaultPlace(position: Int) {
-        if (defaultPlaceIndex.value != position) {
+        if (defaultPlaceIndex.value != position && position < (places.value?.size ?: 0)) {
             _defaultPlace.value = places.value?.get(position)
             _defaultPlaceIndex.value = position
         }

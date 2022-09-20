@@ -17,5 +17,7 @@ data class DefaultPlace(
 
     @ColumnInfo(name = "user_id") val userId: String?,
 
-    @ColumnInfo(name = "default_index") val defaultIndex: Int?
+    @ColumnInfo(name = "default_index") val defaultIndex: Int?,
+
+    @ColumnInfo(name = "place_id") val placeId: String?
 )

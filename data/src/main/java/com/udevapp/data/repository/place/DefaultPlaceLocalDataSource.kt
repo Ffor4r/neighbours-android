@@ -7,7 +7,7 @@ import com.udevapp.data.repository.base.BaseLocalDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class DefaultPlaceLocalDataSource(val database: Database): BaseLocalDataSource() {
+class DefaultPlaceLocalDataSource(val database: Database) : BaseLocalDataSource() {
 
     suspend fun getDefaultPlaceIndex(userId: String): Result<Any?> {
         val result = withContext(Dispatchers.IO) {
@@ -31,9 +31,10 @@ class DefaultPlaceLocalDataSource(val database: Database): BaseLocalDataSource()
         }
     }
 
-    suspend fun setDefaultPlaceIndex(userId: String, index: Int) {
+    suspend fun setDefaultPlaceIndex(userId: String, index: Int, placeId: String) {
         withContext(Dispatchers.IO) {
-            database.neighbours.defaultPlaceDao().insert(DefaultPlace(userId = userId, defaultIndex = index))
+            database.neighbours.defaultPlaceDao()
+                .insert(DefaultPlace(userId = userId, defaultIndex = index, placeId = placeId))
         }
     }
 }

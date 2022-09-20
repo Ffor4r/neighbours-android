@@ -17,5 +17,11 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.udevapp.neighbours.presentation.ui.fragments.main.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+
 
 </navigation>

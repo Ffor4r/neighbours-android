@@ -36,8 +36,6 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
             homeViewModel.defaultPlaceIndex.value ?: 0
         )
 
-    private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +46,6 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
 
         adapter.setEditOnClickListener(OnEditClickListener())
         binding.addressList.adapter = adapter
-        requestPermissionLauncher = registerForActivityResult()
 
         return view
     }
@@ -72,6 +69,14 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
         }
     }
 
+    inner class OnEditClickListener : AddressRecyclerViewAdapter.OnItemClickListener {
+        override fun onItemClick(position: Int, placeResponse: PlaceResponse?) {
+            checkPermission {
+                showEditPlaceDialog(position, placeResponse)
+            }
+        }
+    }
+
     private fun showEditPlaceDialog(position: Int, placeResponse: PlaceResponse?) {
         EditPlaceFragment(homeViewModel, placeResponse, position).show(
             parentFragmentManager,
@@ -83,14 +88,6 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
     private fun showAddPlaceDialog() {
         AddPlaceFragment(homeViewModel).show(parentFragmentManager, AddPlaceFragment.TAG)
         this.dismiss()
-    }
-
-    inner class OnEditClickListener : AddressRecyclerViewAdapter.OnItemClickListener {
-        override fun onItemClick(position: Int, placeResponse: PlaceResponse?) {
-            checkPermission {
-                showEditPlaceDialog(position, placeResponse)
-            }
-        }
     }
 
     private fun clickButtonDone() {
@@ -114,7 +111,7 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
                 onSuccess()
             }
             else -> {
-                requestPermissionLauncher.launch(
+                registerForActivityResult(onSuccess).launch(
                     arrayOf(
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
@@ -124,7 +121,7 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
         }
     }
 
-    private fun registerForActivityResult(): ActivityResultLauncher<Array<String>> {
+    private fun <R>registerForActivityResult(onSuccess: () -> R): ActivityResultLauncher<Array<String>> {
         return registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
@@ -132,12 +129,12 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
                 permissions.getOrDefault(
                     Manifest.permission.ACCESS_FINE_LOCATION, false
                 ) -> {
-                    showAddPlaceDialog()
+                    onSuccess()
                 }
                 permissions.getOrDefault(
                     Manifest.permission.ACCESS_COARSE_LOCATION, false
                 ) -> {
-                    showAddPlaceDialog()
+                    onSuccess()
                 }
                 else -> {
                 }
