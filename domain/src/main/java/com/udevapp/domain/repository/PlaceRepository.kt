@@ -8,5 +8,7 @@ interface PlaceRepository {
 
     suspend fun get(): Result<Any?>
 
+    suspend fun get(id: String): Result<Any?>
+
     suspend fun put(id: String, place: Any?): Result<Any?>
 }

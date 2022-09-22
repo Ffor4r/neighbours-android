@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.udevapp.neighbours.databinding.FragmentTemplatesBinding
+import com.udevapp.neighbours.presentation.ui.fragments.main.templates.add_template_dialog.AddTemplateFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +43,7 @@ class TemplatesFragment : Fragment() {
 
         setupObservers()
         loadData()
+        setupListeners()
     }
 
     private fun loadData() {
@@ -50,6 +52,20 @@ class TemplatesFragment : Fragment() {
 
     private fun setupObservers() {
         placesObserve()
+    }
+
+    private fun setupListeners() {
+        clickAddFab()
+    }
+
+    private fun clickAddFab() {
+        binding.templatesFab.setOnClickListener {
+            val dialog = AddTemplateFragment()
+            dialog.setPositiveClickListener(object : AddTemplateFragment.OnDoneClickListener {
+                override fun onClick() { viewModel.loadTemplates() }
+            })
+            dialog.show(parentFragmentManager, AddTemplateFragment.TAG)
+        }
     }
 
     private fun placesObserve() {

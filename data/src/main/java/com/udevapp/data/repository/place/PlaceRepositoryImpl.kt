@@ -13,6 +13,8 @@ class PlaceRepositoryImpl(
 
     override suspend fun get(): Result<Any?> = placeRemoteDataSource.get()
 
+    override suspend fun get(id: String): Result<Any?> = placeRemoteDataSource.get(id)
+
     override suspend fun put(id: String, place: Any?): Result<Any?> =
         placeRemoteDataSource.put(id, place as PlaceRequest)
 }

@@ -17,4 +17,10 @@ data class UserResponse  (
 
     @SerializedName("createdAt")
     var createdAt: String
-)
+
+
+) {
+    override fun toString(): String {
+        return "$firstName $lastName"
+    }
+}

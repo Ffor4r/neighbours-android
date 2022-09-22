@@ -8,7 +8,7 @@ import retrofit2.http.POST
 interface ScheduleTemplateService {
 
     @POST("schedule-templates")
-    suspend fun post(@Body placeRequest: ScheduleTemplateRequest): Response<ScheduleTemplateResponse>
+    suspend fun post(@Body scheduleTemplateRequest: ScheduleTemplateRequest): Response<ScheduleTemplateResponse>
 
     @GET("schedule-templates")
     suspend fun get(): Response<List<ScheduleTemplateResponse>>

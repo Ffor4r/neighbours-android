@@ -11,6 +11,9 @@ interface PlaceService {
     @GET("places")
     suspend fun get(): Response<List<PlaceResponse>>
 
+    @GET("places/{id}")
+    suspend fun get( @Path("id") id: String): Response<PlaceResponse>
+
     @PUT("places/{id}")
     suspend fun put( @Path("id") id: String, @Body placeRequest: PlaceRequest): Response<PlaceResponse>
 }

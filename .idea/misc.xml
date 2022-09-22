@@ -19,6 +19,9 @@
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_tune.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/activity_main.xml" value="0.18432971014492755" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_add_place.xml" value="0.20081595648232095" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_add_template.xml" value="0.18676337262012693" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_add_template_day_item.xml" value="0.18676337262012693" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_add_template_performers_item.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_blank.xml" value="0.1936725096194955" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_calandar_item.xml" value="0.18676337262012693" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_calendar_item.xml" value="0.6" />
