@@ -9,9 +9,9 @@ import kotlinx.coroutines.withContext
 
 class ScheduleTemplateRemoteDataSource(private val api: Api) : BaseRemoteDataSource() {
 
-    suspend fun get(place: String?): Result<Any?> {
+    suspend fun get(place: String?, days: String?): Result<Any?> {
         val response = withContext(Dispatchers.IO) {
-            api.create(ScheduleTemplateService::class.java).get(place)
+            api.create(ScheduleTemplateService::class.java).get(place,days)
         }
 
         return handleResponse(response)

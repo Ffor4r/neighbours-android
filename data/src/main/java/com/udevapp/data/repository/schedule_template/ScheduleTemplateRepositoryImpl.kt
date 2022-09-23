@@ -8,8 +8,8 @@ class ScheduleTemplateRepositoryImpl(private val scheduleTemplateRemoteDataSourc
     override suspend fun post(scheduleTemplate: Any?): Result<Any?> =
         scheduleTemplateRemoteDataSource.post(scheduleTemplate as ScheduleTemplateRequest)
 
-    override suspend fun get(place: String?): Result<Any?> =
-        scheduleTemplateRemoteDataSource.get(place)
+    override suspend fun get(place: String?, days: String?): Result<Any?> =
+        scheduleTemplateRemoteDataSource.get(place, days)
 
     override suspend fun put(id: String, scheduleTemplateRequest: Any): Result<Any?> =
         scheduleTemplateRemoteDataSource.put(id, scheduleTemplateRequest as ScheduleTemplateRequest)

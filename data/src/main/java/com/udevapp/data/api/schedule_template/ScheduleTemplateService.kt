@@ -9,7 +9,10 @@ interface ScheduleTemplateService {
     suspend fun post(@Body scheduleTemplateRequest: ScheduleTemplateRequest): Response<ScheduleTemplateResponse>
 
     @GET("schedule-templates")
-    suspend fun get(@Query("place") place: String?): Response<List<ScheduleTemplateResponse>>
+    suspend fun get(
+        @Query("place") place: String?,
+        @Query("days") days: String?
+    ): Response<List<ScheduleTemplateResponse>>
 
     @PUT("schedule-templates/{id}")
     suspend fun put(

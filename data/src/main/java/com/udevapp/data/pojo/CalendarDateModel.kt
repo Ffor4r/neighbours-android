@@ -14,10 +14,10 @@ data class CalendarDateModel(var date: Date, var isSelected: Boolean = false) {
             return cal[Calendar.DAY_OF_MONTH].toString()
         }
 
-    val weekDate: String
+    val weekDate: Int
         get() {
             val cal = Calendar.getInstance()
             cal.time = date
-            return cal[Calendar.DAY_OF_WEEK].toString()
+            return cal[Calendar.DAY_OF_WEEK]
         }
 }

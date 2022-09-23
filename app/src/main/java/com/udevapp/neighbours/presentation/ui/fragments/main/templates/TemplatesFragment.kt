@@ -57,7 +57,7 @@ class TemplatesFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        placesObserve()
+        templatesObserve()
     }
 
     private fun setupListeners() {
@@ -116,7 +116,7 @@ class TemplatesFragment : Fragment() {
         }
     }
 
-    private fun placesObserve() {
+    private fun templatesObserve() {
         viewModel.templates.observe(viewLifecycleOwner) {
             adapter.setTemplates(it)
         }

@@ -17,12 +17,18 @@ class CalendarAdapter(
 ) :
     RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
+    private lateinit var onDayClickListener: OnDayClickListener
+
     inner class ViewHolder(val binding: FragmentCalendarItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         val calendarDay: TextView = binding.calendarDay
         val calendarDate: TextView = binding.calendarDate
         val item: LinearLayout = binding.calendarItem
+    }
+
+    interface OnDayClickListener {
+        fun onClick(position: Int, day: CalendarDateModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,6 +55,8 @@ class CalendarAdapter(
             selectedPosition = holder.adapterPosition
             notifyItemChanged(lastSelectedPosition)
             notifyItemChanged(selectedPosition)
+
+            onDayClickListener.onClick(position, item)
         }
 
         if (item.isSelected) {
@@ -62,6 +70,14 @@ class CalendarAdapter(
         }
 
 
+    }
+
+    fun getSelectedDay(): Int {
+        return days[selectedPosition].weekDate
+    }
+
+    fun setOnDayClickListener(listener: OnDayClickListener) {
+        onDayClickListener = listener
     }
 
     override fun getItemCount(): Int = days.size
