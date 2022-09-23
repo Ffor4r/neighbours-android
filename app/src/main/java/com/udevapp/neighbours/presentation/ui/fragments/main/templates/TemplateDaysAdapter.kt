@@ -12,7 +12,7 @@ import com.udevapp.neighbours.databinding.FragmentTemplateItemDayItemBinding
 
 class TemplateDaysAdapter(
     private val days: ArrayList<CalendarDateModel>,
-    private val selectedDays: Set<Int>
+    private val selectedDays: ArrayList<Int>
 ) : RecyclerView.Adapter<TemplateDaysAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: FragmentTemplateItemDayItemBinding) :

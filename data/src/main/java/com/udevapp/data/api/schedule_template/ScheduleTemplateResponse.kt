@@ -12,7 +12,7 @@ data class ScheduleTemplateResponse(
     var action: String,
 
     @SerializedName("days")
-    var days: Set<Int>,
+    var days: ArrayList<Int>,
 
     @SerializedName("performers")
     var performers: List<UserResponse>

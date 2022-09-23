@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.udevapp.neighbours.presentation.ui.fragments.main.templates.add_template_dialog.AddTemplateViewModel" />
+            type="com.udevapp.neighbours.presentation.ui.fragments.main.templates.base.BaseTemplateDialogViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,6 +31,7 @@
                 />
 
             <TextView
+                android:id="@+id/title"
                 style="@style/MaterialAlertDialog.Material3.Title.Text.CenterStacked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

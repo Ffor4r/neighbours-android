@@ -2,6 +2,8 @@ package com.udevapp.neighbours.di
 
 import com.udevapp.domain.repository.ScheduleTemplateRepository
 import com.udevapp.domain.usecase.CreateScheduleTemplateUseCase
+import com.udevapp.domain.usecase.DeleteScheduleTemplateUseCase
+import com.udevapp.domain.usecase.EditScheduleTemplateUseCase
 import com.udevapp.domain.usecase.GetScheduleTemplateUseCase
 import dagger.Module
 import dagger.Provides
@@ -22,4 +24,13 @@ class ScheduleTemplateModule {
         return CreateScheduleTemplateUseCase(scheduleTemplateRepository = scheduleTemplateRepository)
     }
 
+    @Provides
+    fun provideEditScheduleTemplateUseCase(scheduleTemplateRepository: ScheduleTemplateRepository): EditScheduleTemplateUseCase {
+        return EditScheduleTemplateUseCase(scheduleTemplateRepository = scheduleTemplateRepository)
+    }
+
+    @Provides
+    fun provideDeleteScheduleTemplateUseCase(scheduleTemplateRepository: ScheduleTemplateRepository): DeleteScheduleTemplateUseCase {
+        return DeleteScheduleTemplateUseCase(scheduleTemplateRepository = scheduleTemplateRepository)
+    }
 }

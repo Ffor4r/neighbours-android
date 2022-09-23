@@ -41,8 +41,10 @@
     <string name="performers">Performers</string>
     <string name="title">Title</string>
     <string name="fragment_add_template_title">Add new template</string>
+    <string name="fragment_edit_template_title">Edit template</string>
     <string name="cancel">Cancel</string>
     <string name="add_performers">Add performers</string>
     <string name="select_days">Select days pattern</string>
     <string name="action">Action</string>
+    <string name="delete_template_message">Are you sure you want to delete this template?</string>
 </resources>

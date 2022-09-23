@@ -9,9 +9,9 @@ import kotlinx.coroutines.withContext
 
 class ScheduleTemplateRemoteDataSource(private val api: Api) : BaseRemoteDataSource() {
 
-    suspend fun get(): Result<Any?> {
+    suspend fun get(place: String?): Result<Any?> {
         val response = withContext(Dispatchers.IO) {
-            api.create(ScheduleTemplateService::class.java).get()
+            api.create(ScheduleTemplateService::class.java).get(place)
         }
 
         return handleResponse(response)
@@ -20,6 +20,22 @@ class ScheduleTemplateRemoteDataSource(private val api: Api) : BaseRemoteDataSou
     suspend fun post(scheduleTemplateRequest: ScheduleTemplateRequest): Result<Any?> {
         val response = withContext(Dispatchers.IO) {
             api.create(ScheduleTemplateService::class.java).post(scheduleTemplateRequest)
+        }
+
+        return handleResponse(response)
+    }
+
+    suspend fun put(id: String, scheduleTemplateRequest: ScheduleTemplateRequest): Result<Any?> {
+        val response = withContext(Dispatchers.IO) {
+            api.create(ScheduleTemplateService::class.java).put(id, scheduleTemplateRequest)
+        }
+
+        return handleResponse(response)
+    }
+
+    suspend fun delete(id: String): Result<Any?> {
+        val response = withContext(Dispatchers.IO) {
+            api.create(ScheduleTemplateService::class.java).delete(id)
         }
 
         return handleResponse(response)

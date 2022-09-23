@@ -7,6 +7,7 @@
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/calendar_day_highlight_bg.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/calendar_highlight_bg.xml" value="0.1575" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1575" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon__close.xml" value="0.14" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_add.xml" value="0.1765" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_arrow.xml" value="0.164" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/drawable/icon_close.xml" value="0.164" />
@@ -25,6 +26,7 @@
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_blank.xml" value="0.1936725096194955" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_calandar_item.xml" value="0.18676337262012693" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_calendar_item.xml" value="0.6" />
+        <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_edit_template.xml" value="0.18676337262012693" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_home.xml" value="0.16" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_home_bottom_sheet.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/Neighbours/app/src/main/res/layout/fragment_home_bottom_sheet_item.xml" value="0.20081595648232095" />
