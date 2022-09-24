@@ -47,4 +47,9 @@
     <string name="select_days">Select days pattern</string>
     <string name="action">Action</string>
     <string name="delete_template_message">Are you sure you want to delete this template?</string>
+    <string name="logout">Logout</string>
+    <string name="scan">Qr Scan</string>
+    <string name="general">General</string>
+    <string name="theme">Your theme</string>
+    <string name="dark_mode">Dark mode</string>
 </resources>
