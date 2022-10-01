@@ -1,7 +1,7 @@
-package com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet
+package com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet_dialog
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RadioButton
@@ -12,16 +12,17 @@ import com.udevapp.neighbours.databinding.FragmentHomeBottomSheetItemBinding
 
 
 class AddressRecyclerViewAdapter(
-    private val places: LiveData<List<PlaceResponse>>,
-    private var selectedPosition: Int = 0,
-    private var lastSelectedPosition: Int = selectedPosition,
 ) :
     RecyclerView.Adapter<AddressRecyclerViewAdapter.ViewHolder>() {
 
+    private var places: List<PlaceResponse> = listOf()
     private lateinit var editClickListener: OnItemClickListener
 
+    var selectedPosition: Int = -1
+    private var lastSelectedPosition: Int = selectedPosition
+
     interface OnItemClickListener {
-        fun onItemClick(position: Int, placeResponse: PlaceResponse?)
+        fun onItemClick(position: Int, placeResponse: PlaceResponse)
     }
 
     override fun onCreateViewHolder(
@@ -39,8 +40,13 @@ class AddressRecyclerViewAdapter(
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setPlaces(places: List<PlaceResponse>) {
+        this.places = places
+    }
+
     override fun onBindViewHolder(holder: AddressRecyclerViewAdapter.ViewHolder, position: Int) {
-        val item = places.value?.get(position)
+        val item = places[position]
         holder.radioButton.text = item.toString()
         holder.radioButton.isChecked = position == selectedPosition
         holder.radioButton.setOnCheckedChangeListener { _, b ->
@@ -56,15 +62,7 @@ class AddressRecyclerViewAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (places.value == null) {
-            0
-        } else {
-            places.value!!.size
-        }
-    }
-
-    fun getSelectedPosition(): Int = selectedPosition
+    override fun getItemCount(): Int = places.size
 
     fun setEditOnClickListener(listener: OnItemClickListener) {editClickListener = listener}
 

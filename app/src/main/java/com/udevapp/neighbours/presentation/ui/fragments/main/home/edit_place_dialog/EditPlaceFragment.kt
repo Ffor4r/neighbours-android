@@ -1,23 +1,25 @@
-package com.udevapp.neighbours.presentation.ui.fragments.main.home.place.edit_place_dialog
+package com.udevapp.neighbours.presentation.ui.fragments.main.home.edit_place_dialog
 
+import androidx.fragment.app.viewModels
 import com.udevapp.data.api.place.PlaceResponse
 import com.udevapp.data.api.place.address.AddressRequest
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.HomeViewModel
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.add_place_dialog.AddPlaceFragment
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.base.BasePlaceMapDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditPlaceFragment(
-    homeViewModel: HomeViewModel,
-    private val placeResponse: PlaceResponse?,
-    private val position: Int
-) :
-    AddPlaceFragment(homeViewModel) {
+class EditPlaceFragment(private val placeResponse: PlaceResponse) : BasePlaceMapDialogFragment() {
+
+    companion object {
+        const val TAG = "EditPlaceFragment"
+    }
+
+    override val viewModel by viewModels<EditPlaceViewModel>()
+
     override fun clickDone() {
         binding.done.setOnClickListener {
             val split = viewModel.addressText.value?.split(",")
-            val id: String = placeResponse?.id ?: homeViewModel.places.value!![position].id
-            homeViewModel.editPlace(
+            val id: String = placeResponse.id
+            viewModel.editPlace(
                 id,
                 AddressRequest(
                     city = viewModel.locationText.value?.split(",")?.first(),
@@ -25,6 +27,7 @@ class EditPlaceFragment(
                     house = split?.last()?.trim()
                 )
             )
+            onPositiveClickListener.onClick()
             dismiss()
         }
     }

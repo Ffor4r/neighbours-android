@@ -13,6 +13,7 @@ import com.udevapp.neighbours.R
 import com.udevapp.neighbours.databinding.FragmentProfileBinding
 import com.udevapp.neighbours.presentation.extensions.activityNavController
 import com.udevapp.neighbours.presentation.extensions.navigateSafely
+import com.udevapp.neighbours.presentation.utils.QrCodeEncoder
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -39,12 +40,18 @@ class ProfileFragment : Fragment() {
             view.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 
         binding.switchDarkMode.isChecked = nightModeFlags == Configuration.UI_MODE_NIGHT_YES
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupObservers()
+        loadData()
         setupListeners()
     }
 
@@ -64,6 +71,30 @@ class ProfileFragment : Fragment() {
                 else -> false
             }
         }
+    }
+
+    private fun setupObservers() {
+        observeDefaultPlace()
+    }
+
+    private fun observeDefaultPlace() {
+        viewModel.defaultPlace.observe(viewLifecycleOwner) {
+            if (it == null) {
+                binding.qrCodeCard.visibility = View.GONE
+            } else {
+                binding.qrCodeImg.setImageBitmap(
+                    QrCodeEncoder.encode(
+                        "neighbours://" + it.placeId.toString(),
+                        binding.qrCodeImg.minimumWidth,
+                        binding.qrCodeImg.minimumHeight
+                    )
+                )
+            }
+        }
+    }
+
+    private fun loadData() {
+        viewModel.loadDefaultPlace()
     }
 
     private fun switchDarkMode() {

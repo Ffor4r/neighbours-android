@@ -11,5 +11,9 @@ data class UserToken(
 
     val email: String,
 
+    val firstname: String,
+
+    val lastname: String,
+
     val roles: List<String>
 )

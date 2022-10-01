@@ -2,10 +2,7 @@ package com.udevapp.neighbours.di
 
 import com.udevapp.domain.repository.DefaultPlaceRepository
 import com.udevapp.domain.repository.PlaceRepository
-import com.udevapp.domain.usecase.CreatePlaceUseCase
-import com.udevapp.domain.usecase.DefaultPlaceUseCase
-import com.udevapp.domain.usecase.EditAddressUseCase
-import com.udevapp.domain.usecase.GetPlaceUseCase
+import com.udevapp.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,8 +28,13 @@ class PlaceModule {
     }
 
     @Provides
-    fun provideEditAddressUseCase(placeRepository: PlaceRepository): EditAddressUseCase {
-        return EditAddressUseCase(repository = placeRepository)
+    fun provideEditPlaceUseCase(placeRepository: PlaceRepository): EditPlaceUseCase {
+        return EditPlaceUseCase(repository = placeRepository)
+    }
+
+    @Provides
+    fun provideAddMemberUseCase(placeRepository: PlaceRepository): AddMemberUseCase {
+        return AddMemberUseCase(repository = placeRepository)
     }
 
 }

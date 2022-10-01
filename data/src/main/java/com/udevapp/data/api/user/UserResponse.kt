@@ -16,7 +16,10 @@ data class UserResponse  (
     var email: String,
 
     @SerializedName("createdAt")
-    var createdAt: String
+    var createdAt: String,
+
+    @SerializedName("notificationToken")
+    var notificationToken: String
 
 
 ) {

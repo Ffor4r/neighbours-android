@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "81528653148",
+    "project_id": "neighbours-c7387",
+    "storage_bucket": "neighbours-c7387.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81528653148:android:5d8aad7c74e0fcd1d46d99",
+        "android_client_info": {
+          "package_name": "com.udevapp.neighbours"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81528653148-p9le7kh8t4objjvk788ed6lb5ghd75e7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3DNBgtXsODxeQArYlC8DhXWHgOraU0lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81528653148-p9le7kh8t4objjvk788ed6lb5ghd75e7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

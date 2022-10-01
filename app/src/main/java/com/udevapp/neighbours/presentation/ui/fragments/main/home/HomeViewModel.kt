@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.udevapp.data.api.place.PlaceRequest
 import com.udevapp.data.api.place.PlaceResponse
-import com.udevapp.data.api.place.address.AddressRequest
+import com.udevapp.data.api.user.UserRequest
 import com.udevapp.data.db.entity.DefaultPlace
 import com.udevapp.domain.usecase.*
 import com.udevapp.neighbours.presentation.base.BaseViewModel
@@ -18,85 +20,77 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getPlaceUseCase: GetPlaceUseCase,
     private val defaultPlaceUseCase: DefaultPlaceUseCase,
-    private val createPlaceUseCase: CreatePlaceUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val editAddressUseCase: EditAddressUseCase
+    private val addMemberUseCase: AddMemberUseCase,
+    private val updateUserNotificationTokenUseCase: UpdateUserNotificationTokenUseCase
 ) : BaseViewModel() {
 
-    private val _places = MutableLiveData<List<PlaceResponse>>()
-    val places: LiveData<List<PlaceResponse>> = _places
+    private val _place = MutableLiveData<PlaceResponse>()
+    val place: LiveData<PlaceResponse> = _place
 
-    private val _defaultPlace = MutableLiveData<PlaceResponse>()
-    val defaultPlace: LiveData<PlaceResponse> = _defaultPlace
-
-    private val _defaultPlaceIndex = MutableLiveData<Int>()
-    val defaultPlaceIndex: LiveData<Int> = _defaultPlaceIndex
-
-    fun createPlace(addressRequest: AddressRequest, title: String = String()) {
+    fun addMember(id: String) {
         viewModelScope.launch {
             switchLoadingStatus()
-
-            onSuccess(createPlaceUseCase.create(
-                PlaceRequest(
-                    user = getCurrentUserUseCase.getUserToken()?.id,
-                    title = title,
-                    address = addressRequest
+            onSuccess(
+                addMemberUseCase.addMember(
+                    id,
+                    getCurrentUserUseCase.getUserToken()!!.id
                 )
-            )) {
-                loadPlaces()
+            ) {
+                loadPlace()
             }
         }
     }
 
-    fun editPlace(id: String, addressRequest: AddressRequest, title: String = String()) {
-        viewModelScope.launch {
-            switchLoadingStatus()
-
-            onSuccess(editAddressUseCase.edit(
-                id,
-                PlaceRequest(
-                    title = title,
-                    address = addressRequest
-                )
-            )) {
-                loadPlaces()
+    fun updateNotificationUserToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
             }
-        }
-    }
+            val token = task.result
 
-    fun loadPlaces() {
-        viewModelScope.launch {
-            switchLoadingStatus()
-            onSuccess(getPlaceUseCase.get()) {
-                viewModelScope.launch {
-                    _places.value = it as List<PlaceResponse>?
-                    val result =
-                        defaultPlaceUseCase.getDefaultPlace(getCurrentUserUseCase.getUserToken()!!.id)
-                    updateDefaultPlace((result.getOrNull() as DefaultPlace?)?.defaultIndex ?: 0)
+            viewModelScope.launch {
+                switchLoadingStatus()
+                onSuccess(
+                    updateUserNotificationTokenUseCase.put(
+                        getCurrentUserUseCase.getUserToken()!!.id,
+                        UserRequest(notificationToken = token)
+                    )
+                ) {
+
                 }
             }
-        }
+
+        })
     }
 
-    fun updateDefaultPlace(position: Int, force: Boolean) {
-        updateDefaultPlace(position)
-        if (force) {
+    fun loadPlace() {
+        viewModelScope.launch {
             switchLoadingStatus()
-            viewModelScope.launch {
-                defaultPlaceUseCase.setDefaultPlace(
-                    getCurrentUserUseCase.getUserToken()!!.id,
-                    position,
-                    defaultPlace.value!!.id
-                )
-                switchLoadingStatus()
+            val defaultPlace =
+                defaultPlaceUseCase.getDefaultPlace(getCurrentUserUseCase.getUserToken()!!.id)
+                    .getOrNull() as DefaultPlace?
+            if (defaultPlace != null) {
+                onSuccess(getPlaceUseCase.get(defaultPlace.placeId!!)) {
+                    viewModelScope.launch {
+                        if (place.value?.id?.equals((it as PlaceResponse).id) == false || place.value == null) {
+                            _place.value = it as PlaceResponse
+                        }
+                    }
+                }
+            } else {
+                onSuccess(getPlaceUseCase.get()) {
+                    viewModelScope.launch {
+                        val places = it as List<PlaceResponse>
+                        _place.value = places.first()
+                        defaultPlaceUseCase.setDefaultPlace(
+                            getCurrentUserUseCase.getUserToken()!!.id,
+                            0,
+                            places.first().id
+                        )
+                    }
+                }
             }
-        }
-    }
-
-    private fun updateDefaultPlace(position: Int) {
-        if (defaultPlaceIndex.value != position && position < (places.value?.size ?: 0)) {
-            _defaultPlace.value = places.value?.get(position)
-            _defaultPlaceIndex.value = position
         }
     }
 }

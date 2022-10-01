@@ -17,4 +17,7 @@ class PlaceRepositoryImpl(
 
     override suspend fun put(id: String, place: Any?): Result<Any?> =
         placeRemoteDataSource.put(id, place as PlaceRequest)
+
+    override suspend fun addMember(id: String, member: String): Result<Any?> =
+        placeRemoteDataSource.addMember(id, member)
 }

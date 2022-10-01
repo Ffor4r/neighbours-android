@@ -1,27 +1,26 @@
-package com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet
+package com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet_dialog
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.udevapp.data.api.place.PlaceResponse
 import com.udevapp.neighbours.databinding.FragmentHomeBottomSheetBinding
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.HomeViewModel
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.add_place_dialog.AddPlaceFragment
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.edit_place_dialog.EditPlaceFragment
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.add_place_dialog.AddPlaceFragment
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.base.BasePlaceMapDialogFragment
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.edit_place_dialog.EditPlaceFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
-    BottomSheetDialogFragment() {
+class HomeBottomSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "HomeBottomSheetFragment"
@@ -30,11 +29,19 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
     private var _binding: FragmentHomeBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter: AddressRecyclerViewAdapter =
-        AddressRecyclerViewAdapter(
-            homeViewModel.places,
-            homeViewModel.defaultPlaceIndex.value ?: 0
-        )
+    private val viewModel by viewModels<HomeBottomSheetViewModel>()
+
+    private lateinit var adapter: AddressRecyclerViewAdapter
+
+    private lateinit var onPositiveClickListener: OnDoneClickListener
+
+    interface OnDoneClickListener {
+        fun onClick(position: Int? = null)
+    }
+
+    fun setPositiveClickListener(listener: OnDoneClickListener) {
+        onPositiveClickListener = listener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,8 +51,12 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
         _binding = FragmentHomeBottomSheetBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        adapter = AddressRecyclerViewAdapter()
         adapter.setEditOnClickListener(OnEditClickListener())
         binding.addressList.adapter = adapter
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
 
         return view
     }
@@ -53,12 +64,44 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupObservers()
+        loadData()
         setupListeners()
+    }
+
+    private fun loadData() {
+        viewModel.loadPlaces()
     }
 
     private fun setupListeners() {
         clickButtonDone()
         clickButtonAdd()
+    }
+
+    private fun setupObservers() {
+        updateDefaultPlace()
+        placesObserve()
+        defaultIndexObserve()
+    }
+
+    private fun placesObserve() {
+        viewModel.places.observe(viewLifecycleOwner) {
+            adapter.setPlaces(it)
+        }
+    }
+
+    private fun updateDefaultPlace() {
+        viewModel.updateDefaultPlaceIndex.observe(viewLifecycleOwner) {
+            onPositiveClickListener.onClick()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun defaultIndexObserve() {
+        viewModel.defaultPlaceIndex.observe(viewLifecycleOwner) {
+            adapter.selectedPosition = it
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun clickButtonAdd() {
@@ -70,32 +113,40 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
     }
 
     inner class OnEditClickListener : AddressRecyclerViewAdapter.OnItemClickListener {
-        override fun onItemClick(position: Int, placeResponse: PlaceResponse?) {
+        override fun onItemClick(position: Int, placeResponse: PlaceResponse) {
             checkPermission {
                 showEditPlaceDialog(position, placeResponse)
             }
         }
     }
 
-    private fun showEditPlaceDialog(position: Int, placeResponse: PlaceResponse?) {
-        EditPlaceFragment(homeViewModel, placeResponse, position).show(
-            parentFragmentManager,
-            AddPlaceFragment.TAG
-        )
+    private fun showEditPlaceDialog(position: Int, placeResponse: PlaceResponse) {
+        val editPlaceFragment = EditPlaceFragment(placeResponse)
+        editPlaceFragment.setPositiveClickListener(OnDialogsDoneClickListener())
+        editPlaceFragment.show(parentFragmentManager, EditPlaceFragment.TAG)
         this.dismiss()
     }
 
     private fun showAddPlaceDialog() {
-        AddPlaceFragment(homeViewModel).show(parentFragmentManager, AddPlaceFragment.TAG)
+        val addPlaceFragment = AddPlaceFragment()
+        addPlaceFragment.setPositiveClickListener(OnDialogsDoneClickListener())
+        addPlaceFragment.show(parentFragmentManager, AddPlaceFragment.TAG)
         this.dismiss()
+    }
+
+    inner class OnDialogsDoneClickListener : BasePlaceMapDialogFragment.OnDoneClickListener {
+        override fun onClick() {
+            onPositiveClickListener.onClick()
+        }
     }
 
     private fun clickButtonDone() {
         binding.actionChangeSelectedAddress.setOnClickListener {
-            homeViewModel.updateDefaultPlace(adapter.getSelectedPosition(), true)
+            viewModel.updateDefaultPlace(adapter.selectedPosition)
             dismiss()
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -121,7 +172,7 @@ class HomeBottomSheetFragment(private val homeViewModel: HomeViewModel) :
         }
     }
 
-    private fun <R>registerForActivityResult(onSuccess: () -> R): ActivityResultLauncher<Array<String>> {
+    private fun <R> registerForActivityResult(onSuccess: () -> R): ActivityResultLauncher<Array<String>> {
         return registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->

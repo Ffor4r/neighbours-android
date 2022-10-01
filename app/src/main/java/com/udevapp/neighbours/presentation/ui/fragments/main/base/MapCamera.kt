@@ -1,4 +1,4 @@
-package com.udevapp.neighbours.presentation.ui.fragments.main.home.place.add_place_dialog
+package com.udevapp.neighbours.presentation.ui.fragments.main.base
 
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.location.Location

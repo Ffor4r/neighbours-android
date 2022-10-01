@@ -8,5 +8,7 @@ data class PlaceRequest(
 
     var title: String? = String(),
 
-    var address: AddressRequest
+    var address: AddressRequest? = null,
+
+    var members: Set<String>? = setOf()
 )

@@ -33,10 +33,13 @@ class TemplatesViewModel @Inject constructor(
             val result =
                 defaultPlaceUseCase.getDefaultPlace(currentUserUseCase.getUserToken()!!.id)
             viewModelScope.launch {
-                (result.getOrNull() as DefaultPlace?)?.placeId?.let { placeId ->
+                val placeId = (result.getOrNull() as DefaultPlace?)?.placeId
+                if (placeId != null) {
                     onSuccess(getScheduleTemplateUseCase.get(placeId)) {
                         _templates.value = (it as List<ScheduleTemplateResponse>?)?.toMutableList()
                     }
+                } else {
+                    switchLoadingStatus()
                 }
             }
         }

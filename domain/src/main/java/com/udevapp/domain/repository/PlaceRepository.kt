@@ -11,4 +11,6 @@ interface PlaceRepository {
     suspend fun get(id: String): Result<Any?>
 
     suspend fun put(id: String, place: Any?): Result<Any?>
+
+    suspend fun addMember(id: String, member: String): Result<Any?>
 }

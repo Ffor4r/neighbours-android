@@ -7,26 +7,26 @@
 
         <variable
             name="viewmodel"
-            type="com.udevapp.neighbours.presentation.ui.fragments.main.home.place.add_place_dialog.AddPlaceViewModel" />
+            type="com.udevapp.neighbours.presentation.ui.fragments.main.home.add_place_dialog.AddPlaceViewModel" />
     </data>
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         tools:context=".presentation.ui.fragments.main.home.dialogs.add_place_dialog.AddPlaceFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_navigation"
+                android:layout_marginStart="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
                 android:contentDescription="@string/navigation_back"
                 android:src="@drawable/icon_arrow"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -69,7 +69,6 @@
                 app:layout_constraintRight_toRightOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </com.yandex.mapkit.mapview.MapView>
 </layout>

@@ -1,8 +1,9 @@
 package com.udevapp.data.repository.settings
 
 import android.content.Context
+import java.util.*
 
-class SettingsLocalDataSource(context: Context) {
+class SettingsLocalDataSource(private val context: Context) {
 
     companion object {
         private const val SETTINGS_SHARED_PREFERENCE = "neighbours_settings_pref"
@@ -21,5 +22,10 @@ class SettingsLocalDataSource(context: Context) {
         set(value) {
             sharedPreferences.edit().putInt(KEY_DARK_MODE, value).apply()
         }
+
+//    val languageList: List<Locale>
+//        get() {
+//            context.resources.configuration.locales
+//        }
 
 }

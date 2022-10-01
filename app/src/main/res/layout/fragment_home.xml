@@ -19,16 +19,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/ThemeOverlay.Material3.Button.TextButton"
+                android:id="@+id/address_title"
+                android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
-                android:elevation="0dp"
-                app:menu="@menu/home_top_app_bar"
-                app:place="@{viewmodel.defaultPlace}"
-                app:subtitle="@string/subtitle_description"
-                app:subtitleCentered="true"
-                app:titleCentered="true" />
+                android:layout_gravity="center"
+                android:paddingHorizontal="16dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextAppearance.Material3.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:place="@{viewmodel.place}"
+                    android:visibility="gone"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    style="@style/TextAppearance.Material3.ActionBar.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/subtitle_description"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--            <com.google.android.material.appbar.MaterialToolbar-->
+<!--                android:id="@+id/topAppBar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:elevation="0dp"-->
+<!--                app:menu="@menu/home_top_app_bar"-->
+<!--                app:title="@string/dark_mode"-->
+<!--                app:place="@{viewmodel.place}"-->
+<!--                app:subtitle="@string/subtitle_description"-->
+<!--                app:subtitleCentered="true"-->
+<!--                app:titleCentered="true" />-->
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/loading_bar"

@@ -41,4 +41,12 @@ class PlaceRemoteDataSource(private val api: Api) : BaseRemoteDataSource() {
         return handleResponse(response)
     }
 
+    suspend fun addMember(id: String, member: String): Result<Any?> {
+        val response = withContext(Dispatchers.IO) {
+            api.create(PlaceService::class.java).addMember(id, member)
+        }
+
+        return handleResponse(response)
+    }
+
 }

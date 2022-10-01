@@ -9,4 +9,6 @@ data class UserRequest(
     var lastname: String? = null,
 
     var password: String? = null,
+
+    var notificationToken: String? = null,
 )

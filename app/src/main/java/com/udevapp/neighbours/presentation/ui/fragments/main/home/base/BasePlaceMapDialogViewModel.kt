@@ -1,13 +1,8 @@
-package com.udevapp.neighbours.presentation.ui.fragments.main.home.place.add_place_dialog
+package com.udevapp.neighbours.presentation.ui.fragments.main.home.base
 
-import android.location.Address
-import android.location.Geocoder
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.udevapp.data.api.place.address.AddressRequest
 import com.udevapp.neighbours.presentation.base.BaseViewModel
-import com.yandex.mapkit.GeoObject
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.location.Location
@@ -16,12 +11,8 @@ import com.yandex.mapkit.location.LocationManagerUtils
 import com.yandex.mapkit.location.LocationStatus
 import com.yandex.mapkit.search.*
 import com.yandex.runtime.Error
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class AddPlaceViewModel @Inject constructor(private val geocoder: Geocoder) :
-    BaseViewModel() {
+abstract class BasePlaceMapDialogViewModel : BaseViewModel() {
 
     private val _lastLocation = MutableLiveData<Location?>()
     val lastLocation: LiveData<Location?> = _lastLocation

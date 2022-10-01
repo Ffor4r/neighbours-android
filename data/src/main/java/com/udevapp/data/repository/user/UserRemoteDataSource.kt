@@ -20,4 +20,12 @@ class UserRemoteDataSource(private val api: Api) : BaseRemoteDataSource() {
 
         return handleResponse(response)
     }
+
+    suspend fun put(id: String, user: UserRequest): Result<Any?> {
+        val response = withContext(Dispatchers.IO) {
+            api.create(UserService::class.java,).put(id, user)
+        }
+
+        return handleResponse(response)
+    }
 }

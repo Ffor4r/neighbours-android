@@ -1,45 +1,44 @@
-package com.udevapp.neighbours.presentation.ui.fragments.main.home.place.add_place_dialog
+package com.udevapp.neighbours.presentation.ui.fragments.main.home.base
 
-import android.app.Dialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.fragment.app.DialogFragment
+import android.view.*
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
-import com.udevapp.data.api.place.address.AddressRequest
 import com.udevapp.neighbours.R
 import com.udevapp.neighbours.databinding.FragmentAddPlaceBinding
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.HomeViewModel
+import com.udevapp.neighbours.presentation.ui.fragments.main.base.FullScreenDialog
+import com.udevapp.neighbours.presentation.ui.fragments.main.base.MapCamera
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.CameraUpdateReason
 import com.yandex.mapkit.map.Map
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : DialogFragment() {
 
-    companion object {
-        const val TAG = "AddPlaceFragment"
-    }
+abstract class BasePlaceMapDialogFragment : FullScreenDialog() {
 
     private var _binding: FragmentAddPlaceBinding? = null
     protected val binding get() = _binding!!
 
-    protected val viewModel by viewModels<AddPlaceViewModel>()
+    protected open val viewModel by viewModels<BasePlaceMapDialogViewModel>()
 
     private val addressCameraListener = AddressCameraListener()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.Theme_Neighbours_FullScreenDialog)
+    protected lateinit var onPositiveClickListener: OnDoneClickListener
 
-        MapKitFactory.initialize(requireContext())
+    interface OnDoneClickListener {
+        fun onClick()
+    }
+
+    fun setPositiveClickListener(listener: OnDoneClickListener) {
+        onPositiveClickListener = listener
     }
 
     override fun onCreateView(
@@ -53,6 +52,19 @@ open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : Dialog
             view.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 
         binding.mapview.map.isNightModeEnabled = nightModeFlags == Configuration.UI_MODE_NIGHT_YES
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.container) { v: View, windowInsets: WindowInsetsCompat ->
+            val top = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).top
+            val bottom = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+
+            if (top > 0 || bottom > 0) {
+                v.updatePadding(
+                    top = top,
+                    bottom = bottom
+                )
+            }
+            windowInsets
+        }
 
         return view
     }
@@ -93,18 +105,19 @@ open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : Dialog
         }
     }
 
-    protected open fun clickDone() {
-        binding.done.setOnClickListener {
-            val split = viewModel.addressText.value?.split(",")
-            homeViewModel.createPlace(
-                AddressRequest(
-                    city = viewModel.locationText.value?.split(",")?.first(),
-                    street = split?.first()?.trim(),
-                    house = split?.last()?.trim()
-                )
-            )
-            dismiss()
-        }
+    abstract fun clickDone()
+
+    override fun onStart() {
+        super.onStart()
+        MapKitFactory.getInstance().onStart()
+        binding.mapview.onStart()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        MapKitFactory.getInstance().onStop()
+        binding.mapview.onStop()
+        _binding = null
     }
 
     private fun clickFindPosition() {
@@ -116,30 +129,6 @@ open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : Dialog
 
     private fun clickFabNavigation() {
         binding.fabNavigation.setOnClickListener { dismiss() }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val dialog: Dialog? = dialog
-        if (dialog != null) {
-            val width = ViewGroup.LayoutParams.MATCH_PARENT
-            val height = ViewGroup.LayoutParams.MATCH_PARENT
-            dialog.window?.setLayout(width, height)
-            dialog.window?.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        }
-
-        MapKitFactory.getInstance().onStart()
-        binding.mapview.onStart()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        MapKitFactory.getInstance().onStop()
-        binding.mapview.onStop()
-        _binding = null
     }
 
     inner class AddressCameraListener : CameraListener {
@@ -155,6 +144,6 @@ open class AddPlaceFragment(protected val homeViewModel: HomeViewModel) : Dialog
                 binding.addressText.text = resources.getString(R.string.searching)
             }
         }
-
     }
+
 }

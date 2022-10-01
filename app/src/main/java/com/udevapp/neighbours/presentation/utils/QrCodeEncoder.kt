@@ -8,7 +8,7 @@ import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 
 
-class BitmapEncoder {
+class QrCodeEncoder {
     companion object {
         fun encode(data: String, width: Int, height: Int): Bitmap? {
             return try {

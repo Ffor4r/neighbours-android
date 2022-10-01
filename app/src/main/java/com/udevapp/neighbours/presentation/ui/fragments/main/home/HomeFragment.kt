@@ -2,6 +2,7 @@ package com.udevapp.neighbours.presentation.ui.fragments.main.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.material.internal.ToolbarUtils
 import com.udevapp.neighbours.databinding.FragmentHomeBinding
-import com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet.HomeBottomSheetFragment
+import com.udevapp.neighbours.presentation.ui.fragments.main.home.bottom_sheet_dialog.HomeBottomSheetFragment
 import com.udevapp.neighbours.presentation.ui.fragments.main.home.place.PlaceFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -51,20 +53,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.loadPlaces()
+        val qrPlaceId = requireActivity().intent.dataString.toString().split("//").last()
+        try {
+            UUID.fromString(qrPlaceId)
+            viewModel.addMember(qrPlaceId)
+        } catch (exception: Exception) {
+            viewModel.loadPlace()
+        }
+        viewModel.updateNotificationUserToken()
     }
 
     private fun setupObservers() {
-        placesObserve()
-        errorObserve()
+        placeObserve()
     }
 
-    private fun placesObserve() {
-        viewModel.defaultPlaceIndex.observe(viewLifecycleOwner) {
+    private fun placeObserve() {
+        viewModel.place.observe(viewLifecycleOwner) {
             childFragmentManager.beginTransaction().apply {
                 val fragment = PlaceFragment()
                 fragment.arguments = Bundle().apply {
-                    putString(PlaceFragment.TAG, viewModel.places.value?.get(it)?.id)
+                    putString(PlaceFragment.TAG, viewModel.place.value?.id)
                 }
                 replace(binding.placePage.id, fragment)
                 commit()
@@ -72,24 +80,23 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun errorObserve() {
-        viewModel.error.observe(viewLifecycleOwner) {
-        }
-    }
-
-    @SuppressLint("RestrictedApi")
     private fun clickAddressTitle() {
-        ToolbarUtils.getTitleTextView(binding.topAppBar)?.setOnClickListener {
-            clickToolbar()
-        }
-        ToolbarUtils.getSubtitleTextView(binding.topAppBar)?.setOnClickListener {
+        binding.addressTitle.setOnClickListener{
             clickToolbar()
         }
     }
 
     private fun clickToolbar() {
-        val modalBottomSheet = HomeBottomSheetFragment(viewModel)
-        modalBottomSheet.show(parentFragmentManager, HomeBottomSheetFragment.TAG)
+        val modalBottomSheetFragment = HomeBottomSheetFragment()
+        modalBottomSheetFragment.setPositiveClickListener(BottomSheetFragmentPositiveClickListener())
+        modalBottomSheetFragment.show(parentFragmentManager, HomeBottomSheetFragment.TAG)
+    }
+
+    inner class BottomSheetFragmentPositiveClickListener :
+        HomeBottomSheetFragment.OnDoneClickListener {
+        override fun onClick(position: Int?) {
+            viewModel.loadPlace()
+        }
     }
 
     override fun onDestroyView() {

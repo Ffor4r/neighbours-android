@@ -36,6 +36,7 @@ class Api (private val loginLocalDataSource: LoginLocalDataSource) {
                         }.build())
                     }
                     .connectTimeout(3,TimeUnit.SECONDS)
+                    .retryOnConnectionFailure(true)
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())
